@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #31314f);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 10px;
+            overflow: hidden;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            margin-top: 30px;
+            font-size: 2rem;
+            color: #ff4a57;
+            text-shadow: 0px 5px 15px rgba(255, 74, 87, 0.5);
+        }
+        #container {
+            background: #2a2a3d;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        #field {
+            margin: 20px 0;
+            text-align: center;
+        }
+        input {
+            text-align: center;
+            width: 90%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        input:focus {
+            border: 2px solid #ff4a57;
+            box-shadow: 0px 0px 10px #ff4a57;
+        }
+        #submit {
+            width: 90%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff4a57, #ff7676);
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        #submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(255, 74, 87, 0.5);
+        }
+        .message {
+            font-size: 0.9rem;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            color: #ff4a57;
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #b5b5c3;
+        }
+        footer a {
+            color: #ff4a57;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #ff4a57;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile-specific styles */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+
+            header h1 {
+                margin: 30px;
+    
+                font-size: 4rem;
+                text-align: center;
+            }
+
+            #container {
+                padding: 20px;
+                border-radius: 10px;
+                max-width: 100%;
+                box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+            }
+
+            input, #submit {
+                width: 100%;
+                font-size: 1rem;
+                padding: 14px;
+            }
+
+            .message {
+                font-size: 0.8rem;
+                margin-top: 8px;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                text-align: center;
+                margin-top: 15px;
+            }
+
+            footer a {
+                font-size: 0.9rem;
+            }
+        }
+        ::placeholder{
+            text-align: center;
+        }
+        #field h1{
+            color: #ff4a57;
+            margin: 20px;
+        }
+        #checkbox{
+            /* margin: 0; */
+            box-shadow: none;
+            margin-right: 0;
+            width: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sign Up</h1>
+    </header>
+    <div id="container">
+        <div id="field">
+            <form id="form" action="#">
+                <h1>Create an account</h1>
+                <input type="text" id="firstName" placeholder="Full-name" required>
+                <input type="text" placeholder="Username" name="username" id="username" required>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" name="password" id="password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm-Password" required>
+                <br>
+                <input type="checkbox" name="checkbox" id="checkbox"> 
+                <label for="checkbox">aggrement read terms and policy and accept 
+                </label>
+                <br>
+                <input id="submit" type="submit" value="Create">
+                <div class="spinner" id="spinner"></div>
+            </form>
+        </div>
+        <div id="message-container"></div>
+    </div>
+    <footer>
+        <p>Powered by <a id="links" href="#">MuazTech Labs</a>. All rights reserved.</p>
+    </footer>
+    <script>
+        function get(id){
+            resp = document.getElementById(id)
+            return resp
+        }
+        const form = get('form');
+        const spinner = get('spinner');
+        const messageContainer = get('message-container');
+        const checkbox = get('checkbox')
+
+        let check = false
+
+        checkbox.addEventListener('change', function(event) {
+            if (this.checked){
+                check = true;
+                console.log(check)
+            } else{
+                console.log(check)
+            }
+        })
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent form submission
+            
+            const firstName = get('fullname').value;
+            const lastName = get('lastName').value;
+            const username = get('username').value;
+            const password = get('password').value;
+            const confirmPassword = get('confirmPassword').value;
+
+            spinner.style.display = 'block';  // Show spinner
+            messageContainer.innerHTML = '';  // Clear any old messages
+
+            if (!check){
+                // event.preventDefault();
+                console.log(check)
+                messageContainer.textContent = 'check please';
+            }
+
+            if (password !== confirmPassword){
+                event.preventDefault();
+                spinner.style.display = 'none'
+                messageContainer.textContent = 'passwword mismatch';
+                console.log('mismatch')
+
+            } else{
+                fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName:firstName,lastName:lastName, username: username, password:password })
+            })
+            .then(response => response.json())  // Get the response as a blob
+            .then(data => {
+                messageContainer.textContent = data.message;
+                spinner.style.display = 'none';  // Hide spinner
+            })
+            .catch(error => {
+                spinner.style.display = 'none';  // Hide spinner
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = `Error: ${error} - Unable to connect to the server.`;
+                messageContainer.appendChild(message);
+            });
+            }
+
+            
+        });
+    </script>
+</body>
+</html>

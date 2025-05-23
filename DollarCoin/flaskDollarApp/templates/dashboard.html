@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+    <title>Dollar Coin</title>
+    <style>
+        #mining-area{
+            position: relative;
+
+            border-radius: 50%;
+            cursor:none;
+        }
+
+        .popup {
+            position: absolute;
+            font-size: 30px;
+            color: white;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 0;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        .popup:focus{
+            outline: none;
+        }
+
+        .flying {
+            transform: translateY(100px); /* Adjust flying height */
+            opacity: 1000; /* Fades out */
+        }
+        #transfereble-balance{
+            color: goldenrod;
+            /* background-color: silver; */
+            /* border: 2px solid goldenrod; */
+            display: flex;
+            background: absolute;
+            border-radius: 1px;
+            padding: 7px;
+            /* height: 2px; */
+
+            float: right;
+        }
+        #input-address{
+            background: transparent;
+            border: none;
+
+        }
+        #copy-address{
+            color: whitesmoke;
+            background: rebeccapurple;
+            border-radius: 5px;
+            border: 5px solid transparent;
+            padding: 1px;
+        }
+                /* all body */
+                body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000;
+            color: #fff;
+            position: relative;
+        }
+
+        /* the div for all body */
+        #app {
+            display:block;
+            flex-direction: column;
+
+        }
+        /* header for username and balance */
+        header {
+            padding: 20px;
+
+        }
+
+        /* the main mining area background */
+        .mine {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        /* mining area img that users click */
+        #mining-area img{
+            width: 400px;
+            height: auto;
+            background: transparent;
+            margin-top: -150px;
+
+        }
+        .claim{
+            color: whitesmoke;
+            margin-top: 50px;
+            background-color: #1d2025;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: left;
+        }
+        #claim{
+            float: right;
+            margin-bottom: -10px;
+            background-color: rebeccapurple;
+            border: none;
+            color: whitesmoke;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: -10px;
+        }
+
+        #Coins{
+            padding: 10px;
+            font-size: 50px;
+            color: whitesmoke;
+
+
+        }
+        #input{
+            border: none;
+            height: 20px;
+            background: transparent;
+            color: whitesmoke;
+            pointer-events: none;
+            text-align: center;
+        }
+        #input:focus{
+            outline: none;
+        }
+        #copy{
+            background-color: rebeccapurple;
+            width: 50%;
+            border: none;
+            border-radius: 5px;
+            height: 30px;
+            margin-top: 10px;
+
+        }
+        #copy:hover{
+            background-color: goldenrod;
+            color: whitesmoke;
+            transition: 6ms;
+        }
+
+        .task-img{
+            margin-top: 20px;
+            border-radius: 50%;
+            width: 300px;
+            height: auto;
+        }
+        /* task box a decoration */
+        #task-box a{
+            text-decoration: none;
+            color: whitesmoke;
+            background-color: #1d2025;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: medium;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+        }
+        #daily-box a{
+            text-decoration: none;
+            color: whitesmoke;
+            background-color: #1d2025;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: medium;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+        }
+
+
+
+        i{
+            color: whitesmoke;
+            padding: 10px;
+            font-size: medium;
+        }
+        #task-box h1{
+            text-align: left;
+        }
+        #daily-box h1{
+            text-align: left;
+        }
+
+        .menu {
+            background-color: #1d2025;
+            text-align: justify;
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+
+        .footer-menu {
+            bottom: 0px;
+            position: fixed;
+            width: 100%;
+            left: 0px;
+        }
+
+        /* footer menu link */
+        .menu a{
+            text-decoration: none;
+            color: whitesmoke;
+        }
+        /* link hover */
+        .footer-item:hover {
+            background: black;
+            border-radius: 10px;
+        }
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-item img {
+            width: 50px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .footer-item p {
+            font-size: 10px;
+            color: whitesmoke; /* Adjust color as needed */
+        }
+
+        .content{
+            display: none;
+        }
+        .active{
+            display: block;
+        }
+        /* mining area img click animation */
+
+        @keyframes clickAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* transforming */
+        #mining-area {
+            transition: transform 0.2s ease;
+            margin-top: 150px;
+        }
+
+        /*click minig-area animation */
+        #mining-area.clicked {
+            animation: clickAnimation 0.2s ease;
+        }
+        /* disabling link */
+
+        #task-box a.used {
+            /* Disable clicking */
+            pointer-events: none;
+            /* Make it look disabled */
+            opacity: 0.5;
+        }
+        /* referral nox style */
+        .referral{
+            margin-top: 200px;
+            background: #1d2025;
+            border-radius: 30px;
+            padding: 20px;
+        }
+        #Referral-menu a{
+            text-decoration: none;
+            color: green;
+            font-size: large;
+        }
+
+        #withdraw-menu h1{
+            margin-top: 200px;
+        }
+         /* the coin that indicate the balance */
+         .balance-coin{
+            width: 50px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        /* the icons in the tesk-box */
+        .task-icon{
+            width: 80px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* the dollar sign in telegram task */
+        .telegram2{
+            width: 25px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        form{
+            background-color: #1d2025;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        form input{
+            margin-top: 10px;
+            background: transparent;
+            text-align: center;
+            height: 30px;
+            border: none;
+            border-bottom: goldenrod solid 2px;
+            color: goldenrod;
+        }
+        form input:focus{
+            outline: none;
+        }
+        form #submit{
+            background-color: rebeccapurple;
+            border: none;
+            color: goldenrod;
+            width: 50%;
+            border-radius: 5px;
+        }
+        form #submit:hover{
+            background-color: goldenrod;
+            color: purple;
+        }
+        /* General styles for the alert box */
+        .alert {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Success alert */
+        .alert.success {
+            background-color: #4CAF50; /* Green */
+        }
+
+        /* Error alert */
+        .alert.error {
+            background-color: #f44336; /* Red */
+        }
+
+        /* Add a fade-in effect */
+        .alert.show {
+            opacity: 1;
+        }
+
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='dashboard.css')}}">
+</head>
+<body>
+    <!-- this is the first divison in the app for all divs -->
+    <div id="app">
+        <!-- the div for dollar coin menu with the username in the header and the mining area -->
+        <div id="dollar-coin-menu" class="active content">
+            <!-- header for username and the balance -->
+            <header>
+                <i id="transfereble-balance">balance: {{sbalance}} </i><br>
+                <!-- h1 for username username inside the header -->
+                <h1>{{username}}</h1>
+                    <!-- h1 to make the balance large -->
+                    <h1>
+                        <!-- the image before the balance -->
+                        <img class="balance-coin" src="{{url_for('static',filename='coin.png')}}" alt="coin"> {{balance}} Coins
+                    </h1>
+
+            </header>
+            <!-- this is the main position in the div dollar-coin-menu -->
+            <main class="mine">
+                <!-- mining area div -->
+                <div id="mining-area">
+                    <!-- the image in the mining area to click -->
+                    <img src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin"/>
+                </div>
+            </main>
+            <br><br>
+            <div class="claim">
+             <!-- paragraph for adding the balance -->
+             <p>
+                <label id="balance">{{balance}} claimed</label><button type="button" onclick="claim()" id="claim">claim</button>
+            </p>
+            </div>
+            <br><br><br><br><br>
+        </div>
+        <!-- this is the task menu where a user peform a task and get paid -->
+        <div id="task-menu" class="content">
+            <!-- this is a section with a task header -->
+            <section class="task header">
+                <img class="task-img" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">
+                <!-- h1 for earn more -->
+                <h1 id="Coins">Earn More Coins</h1>
+            </section>
+            <section id="daily-box">
+                <h1>Daily Tasks</h1>
+                <!-- telegram task -->
+                <a id="daily-task-link" href="https://www.highratecpm.com/bhpn1i9v8?key=784f1ce97f50612dbf236c5d6becd22c" data-coins="500" target="_blank">
+                    <!-- telegram icon img-->
+                    <img class="task-icon" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">
+                    <i> Watch And Earn <br><img class="telegram2" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">+500</i>
+                </a>
+            </section>
+            <!-- task boxs where to click and earn the task -->
+            <section id="task-box">
+                <h1>Tasks</h1>
+                <!-- telegram task -->
+                <a href="https://t.me/dollar_coin_channel" data-coins="2000">
+                    <!-- telegram icon img-->
+                    <img class="task-icon" src="{{url_for('static', filename='telegram.png')}}" alt="Dollar Coin">
+                    <i> Join our Telegram channel <br><img class="telegram2" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">+2000</i>
+                </a>
+                <!-- this is a link for my ads watch and earn -->
+                <a href="https://www.highratecpm.com/xy2z2c5ap7?key=ea57c422e75afb4961248c80d68d281d" data-coins="1000" target="_blank">
+                    <!-- coin icon for task -->
+                    <img class="task-icon" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">
+                    <i> Watch And Earn <br><img class="telegram2" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">+1000</i>
+                </a>
+                <!-- twitter task -->
+                <a href="https://x.com/Dollarcoin32536?t=Gt4UETs7z0mmJppG6-rVLQ&s=09" data-coins="2000">
+                    <!-- tiwitter icon -->
+                    <img class="task-icon" src="{{url_for('static', filename='twitter.png')}}" alt="twitter icon">
+                    <i> follow our X account <br><img class="telegram2" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">+2000</i>
+                </a>
+                <br><br><br><br><br>
+            </section>
+        </div>
+        <!-- referral menu -->
+        <div  id="Referral-menu" class="content">
+            <!-- were to copy your referral link -->
+            <section style="border-radius: 5px;" class="referral">
+                <p>Share this link with your friends to earn rewards:</p>
+                <input id="input" type="text" value="{{ referral_link }}" readonly>
+                <br>
+                <button type="button" id="copy" onclick="copy()">copy</button>
+            </section>
+            <h3>Referred users</h3>
+                <ul>
+                    {% for user in referred_users %}
+                        <li>{{ user.username }}  Balance: {{ user.balance }} <img class="telegram2" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin"> coins <br><br></li>
+                    {% endfor %}
+
+                </ul>
+                <br><br><br>
+        </div>
+        <!-- withdraw menu -->
+        <div style="margin-bottom: 100px;" id="withdraw-menu" class="content">
+           c
+        <div style="margin-top: 100px;" id="airtime-menu" class="content">
+            <h1>Airtime</h1>
+            <form  style="border-radius: 5px;" id="airtime-form">
+                <h4>Airtime balance {{ airtime_balance }}</h4>
+                <div style="display: none; background-color: red; color: white; border-radius: 3px; padding: 10px;" id="airtime-message"></div>
+                <input type="tel" name="phone-number" id="phone-number" placeholder="phone" required>
+                <br>
+                <input type="number" name="airtime-footer" id="airtime-amount" placeholder="amount" required>
+                <br>
+                <input type="submit" value="send" id="submit">
+            </form>
+        </div>
+        <!-- this is the footer menu -->
+        <div class="footer-menu">
+            <!-- footer where to click and change the side -->
+            <footer class="menu">
+                <!-- link to dollar-coin menu -->
+               <div class="footer-item">
+                <a onclick="showcontent('dollar-coin-menu')">
+                    <img class="task-icon" src="{{url_for('static', filename='axe1.png')}}" alt="Dollar Coin">
+                    <p>mining</p>
+                </a>
+               </div>
+                <!-- link to task-menu -->
+                <div class="footer-item">
+                    <a onclick="showcontent('task-menu')">
+                        <img class="task-icon" src="{{url_for('static', filename='task.png')}}" alt="Dollar Coin">
+                        <p>task</p>
+                    </a>
+                </div>
+                <!-- link to referral link -->
+                <div class="footer-item">
+                    <a onclick="showcontent('Referral-menu')">
+                        <img class="task-icon" src="{{url_for('static', filename='referral.png')}}" alt="Dollar Coin">
+                        <p>invite</p>
+                    </a>
+                </div>
+                <!-- link to withdraw-menu -->
+                <div class="footer-item">
+                    <a onclick="showcontent('withdraw-menu')">
+                        <img class="task-icon" src="{{url_for('static', filename='transfer.png')}}" alt="Dollar Coin">
+                        <p>transfer</p>
+                    </a>
+                </div>
+                <div id="airtime-footer" class="footer-item">
+                        <a onclick="showcontent('airtime-menu')">
+                            <img class="task-icon" src="{{url_for('static', filename='transfer.png')}}" alt="Dollar Coin">
+                            <p>airtime</p>
+                        </a>
+                </div>
+            </footer>
+        </div>
+
+        <script src="{{url_for('static', filename='app.js')}}"></script>
+    </div>
+</body>
+</html>
