@@ -29,6 +29,7 @@
         width: 100%;
         height: 50px;
         margin-top: 10px;
+        outline: none;
       }
       #submit {
         background-color: #34495e;
@@ -89,6 +90,7 @@
       <h1>Signup</h1>
     </header>
     <form id="form">
+      {% csrf_token %}
       <div id="message"><i id="message-box"></i></div>
       <br />
       <input
@@ -99,6 +101,8 @@
         required
       />
       <br />
+      <div id="fullName-message" style="color: red;"></div>
+      <br />
       <input
         type="email"
         name="email"
@@ -106,6 +110,8 @@
         placeholder="Email"
         required
       />
+      <br />
+      <div id="email-message" style="color: red;"></div>
       <br />
       <input
         type="password"
@@ -115,6 +121,8 @@
         required
       />
       <br />
+      <div id="password-message" style="color: red;"></div>
+      <br />
       <input
         type="password"
         name="confirmPassword"
@@ -123,6 +131,8 @@
         required
       />
       <br />
+      <div id="confirmPassword-message" style="color: red;"></div>
+      <br />
       <input id="submit" type="submit" value="Signup" />
     </form>
     <a onclick="showLoader()" href="{% url 'login'%}"
@@ -130,9 +140,16 @@
     >
   </body>
   <script>
-    function getId(id) {
-      return document.getElementById(id);
-    }
+    const getId = (id) => document.getElementById(id);
+    const fullNameField = getId("fullName");
+    const emailField = getId("email");
+    const passwordField = getId("password");
+    const confirmPasswordField = getId("confirmPassword");
+    const passwordMessage = getId("password-message");
+    const fullNameMessage = getId("fullName-message");
+    const emailMessage = getId("email-message");
+    const confirmPasswordMessage = getId("confirmPassword-message");
+  
     function showLoader() {
       const loader = document.getElementById("loader");
       if (loader) loader.style.display = "flex";
@@ -151,25 +168,24 @@
       hideLoader();
     });
     const myForm = getId("form");
-    myForm.addEventListener("submit", function (event) {
+    myForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const message = getId("message");
-      const messageBox = getId("message-box");
-      let password = getId("password").value;
-      let confirmPassword = getId("confirmPassword").value;
+      fetch("{% url 'register' %}",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "X-CSRFToken": document.querySelector("input[name=csrfmiddlewaretoken]").value
+        },
+        body: JSON.stringify({fullName:fullNameField.value})
 
-      if (confirmPassword !== password) {
-        event.preventDefault();
-        message.style.display = "block";
-        messageBox.textContent = "Password Mismatch!";
-        setTimeout(() => {
-          message.style.display = "none";
-        }, 2000);
-      } else {
-        showLoader();
-        alert("good");
-        hideLoader();
-      }
+      })
+      .then(response = response.json())
+      .then(data =>{
+        console.log(data);
+        
+      }).catch(error => 
+        console.error(error)
+      );
     });
   </script>
 </html>
