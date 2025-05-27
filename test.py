@@ -20,35 +20,32 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response'''
 
-# from fastapi import FastAPI
+ from fastapi import FastAPI
 
-# app = FastAPI()
+ app = FastAPI()
 
-# @app.webhooks('/')
-# def web():
-#     return {'hello':'world!'}
+ @app.webhooks('/')
+ def web():
+     return {'hello':'world!'}
 
-# import requests
+ import requests
 
-# url = "https://api.mtn.com/v1/datagifting/customers/senderMsisdn/dataGifting"
+ url = "https://api.mtn.com/v1/datagifting/customers/senderMsisdn/dataGifting"
 
-# payload = {
-#     "receiverMsisdn": "2349062058463",
-#     "productCode": "NACT_NG_Data_4504",
-#     "sendSms": True
-# }
-# headers = {
-#     "Content-Type": "application/json",
-#     "X-API-Key": "xzJMvkYcFJUQnmKKDtFi8TMHYsMzhzw5"
-# }
+ payload = {
+     "receiverMsisdn": "2349062058463",
+     "productCode": "NACT_NG_Data_4504",
+     "sendSms": True
+ }
+ headers = {
+     "Content-Type": "application/json",
+     "X-API-Key": "xzJMvkYcFJUQnmKKDtFi8TMHYsMzhzw5"
+ }
 
-# response = requests.request("POST", url, json=payload, headers=headers)
+ response = requests.request("POST", url, json=payload, headers=headers)
 
-# print(response.status_code)
-# import http.client
-
-# conn = http.client.HTTPSConnection("api.mtn.com")
-
+ print(response.status_code)
+import http.cli
 # payload = "{\n  \"receiverMsisdn\": \"2349062058463\",\n  \"productCode\": \"NACT_NG_Data_4504\",\n  \"sendSms\": true\n}"
 
 # headers = {
