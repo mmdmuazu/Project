@@ -42,16 +42,13 @@
       a:hover {
         border-bottom: 2px solid #e67e22;
       }
-      i {
+      /* i {
         background-color: red;
         padding: 20px;
         border-radius: 10px;
         color: #f4f4f4;
-      }
-      #message {
-        padding: 30px;
-        display: none;
-      }
+      } */
+
       #loader {
         display: flex;
         position: fixed;
@@ -91,7 +88,7 @@
     </header>
     <form id="form">
       {% csrf_token %}
-      <div id="message"><i id="message-box"></i></div>
+      <div id="message" style="color:  red;"></div>
       <br />
       <input
         type="text"
@@ -101,7 +98,7 @@
         required
       />
       <br />
-      <div id="fullName-message" style="color: red;"></div>
+      <div id="fullName-message" style="color: red"></div>
       <br />
       <input
         type="email"
@@ -111,7 +108,7 @@
         required
       />
       <br />
-      <div id="email-message" style="color: red;"></div>
+      <div id="email-message" style="color: red"></div>
       <br />
       <input
         type="password"
@@ -121,7 +118,7 @@
         required
       />
       <br />
-      <div id="password-message" style="color: red;"></div>
+      <div id="password-message" style="color: red"></div>
       <br />
       <input
         type="password"
@@ -131,7 +128,10 @@
         required
       />
       <br />
-      <div id="confirmPassword-message" style="color: red;"></div>
+      <div
+        id="confirmPassword-message"
+        style="display: block; color: red"
+      ></div>
       <br />
       <input id="submit" type="submit" value="Signup" />
     </form>
@@ -149,7 +149,8 @@
     const fullNameMessage = getId("fullName-message");
     const emailMessage = getId("email-message");
     const confirmPasswordMessage = getId("confirmPassword-message");
-  
+    const message = getId("message");
+
     function showLoader() {
       const loader = document.getElementById("loader");
       if (loader) loader.style.display = "flex";
@@ -167,25 +168,53 @@
     window.addEventListener("pageshow", function (event) {
       hideLoader();
     });
+    const timeOut = (id, time) =>
+      setTimeout((event) => {
+        getId(id).textContent = "";
+      }, time);
     const myForm = getId("form");
     myForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      fetch("{% url 'register' %}",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "X-CSRFToken": document.querySelector("input[name=csrfmiddlewaretoken]").value
+      showLoader();
+      fetch("{% url 'register' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": document.querySelector(
+            "input[name=csrfmiddlewaretoken]"
+          ).value,
         },
-        body: JSON.stringify({fullName:fullNameField.value})
-
+        body: JSON.stringify({
+          fullName: fullNameField.value,
+          email: emailField.value,
+          password: passwordField.value,
+          confirmPassword: confirmPasswordField.value,
+        }),
       })
-      .then(response = response.json())
-      .then(data =>{
-        console.log(data);
-        
-      }).catch(error => 
-        console.error(error)
-      );
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            hideLoader();
+          }
+          if (data.fullName) {
+            console.log("fullname");
+          } else if (data.email) {
+            console.log("email");
+          } else if (data.password) {
+            console.log("password");
+          } else if (data.confirmPassword) {
+            confirmPasswordMessage.textContent = data.confirmPassword;
+            confirmPasswordField.style.border = "2px solid red";
+            timeOut("confirmPassword-message", 1000);
+          } else {
+            console.log("nothing");
+          }
+        })
+        .catch((error) => {
+          hideLoader();
+          message.textContent = "Check your internet connection";
+          timeOut("message",2000);
+        });
     });
   </script>
 </html>

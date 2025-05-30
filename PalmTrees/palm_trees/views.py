@@ -9,18 +9,20 @@ def index(req):
     return render(req,'test.html',{'product':products})
 def register(req:json):
     if req.method == "POST":
-       fullName =  user("",'fullName')
-       print('This is your full name: ',fullName,fullName)
+       data = json.load(req)
+       fullName:str =  data.get('fullName')
+       email:str = data.get('email')
+       password:str = data.get('password')
+       confirmPassword:str = data.get('confirmPassword')
+       print("name: ",fullName,"email :",email,"password :", password,"confirm password: ",confirmPassword)
+       
+       if password != confirmPassword:
+        return JsonResponse({"confirmPassword":"password mismatch !"})
+    #    if confirmPassword != password:
+    #     return JsonResponse({'message':'password mismatch !'}),400
     return render(req,'signup.html')
 
 def login(req):
     return render(req,'signin.html')
 
-def user(req,info:any) -> any:
-    try:
-        data = json.load(req)
-        information = data.get(info)
-        return information
-    except Exception as e:
-        return e
-    
+
