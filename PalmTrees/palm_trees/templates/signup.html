@@ -13,7 +13,7 @@
         text-align: center;
       }
       header h1 {
-        margin-top: 100px;
+        margin-top: 60px;
         color: #333;
         padding: 10px;
         font-size: 50px;
@@ -88,7 +88,7 @@
     </header>
     <form id="form">
       {% csrf_token %}
-      <div id="message" style="color:  red;"></div>
+      <div id="message" style="color: red"></div>
       <br />
       <input
         type="text"
@@ -197,7 +197,10 @@
             hideLoader();
           }
           if (data.fullName) {
-            console.log("fullname");
+            fullNameMessage.textContent = data.fullName;
+            fullNameField.style.border = "2px solid red";
+            timeOut("fullName-message",2000)
+    
           } else if (data.email) {
             console.log("email");
           } else if (data.password) {
@@ -205,7 +208,7 @@
           } else if (data.confirmPassword) {
             confirmPasswordMessage.textContent = data.confirmPassword;
             confirmPasswordField.style.border = "2px solid red";
-            timeOut("confirmPassword-message", 1000);
+            timeOut("confirmPassword-message", 2000);
           } else {
             console.log("nothing");
           }
@@ -213,7 +216,7 @@
         .catch((error) => {
           hideLoader();
           message.textContent = "Check your internet connection";
-          timeOut("message",2000);
+          timeOut("message", 2000);
         });
     });
   </script>

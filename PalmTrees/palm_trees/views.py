@@ -2,7 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Product
 import json
+from palm_trees.models import Register,Order,Product
 
+def check(name):
+    try:
+        Register.objects.get(email=name)
+        return True
+    except Exception:
+        return False
 # Create your views here.
 def index(req):
     products = Product.objects.all()
@@ -14,12 +21,14 @@ def register(req:json):
        email:str = data.get('email')
        password:str = data.get('password')
        confirmPassword:str = data.get('confirmPassword')
-       print("name: ",fullName,"email :",email,"password :", password,"confirm password: ",confirmPassword)
-       
+
+       if check(email):
+         return JsonResponse({"fullName":"user already exists"})
+
        if password != confirmPassword:
         return JsonResponse({"confirmPassword":"password mismatch !"})
-    #    if confirmPassword != password:
-    #     return JsonResponse({'message':'password mismatch !'}),400
+       
+       
     return render(req,'signup.html')
 
 def login(req):
