@@ -43,6 +43,14 @@ INSTALLED_APPS = [
     'palm_trees'
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'muhammadaliyumuazu@gmail.com'
+EMAIL_HOST_PASSWORD = '@Amir2451'
+DEFAULT_FROM_EMAIL = 'muhammadaliyumuazu@gmail.com'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
