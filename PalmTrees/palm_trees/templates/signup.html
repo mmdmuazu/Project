@@ -88,7 +88,7 @@
     </header>
     <form id="form">
       {% csrf_token %}
-      <div id="message" style="color: red"></div>
+      <div id="message"></div>
       <br />
       <input
         type="text"
@@ -196,13 +196,18 @@
           if (data) {
             hideLoader();
           }
-          if (data.fullName) {
+          if (data.success){
+            message.textContent = data.message;
+            message.style.color = "green";
+            timeOut("message",2000);
+          }
+          else if (data.fullName) {
             fullNameMessage.textContent = data.fullName;
             fullNameField.style.border = "2px solid red";
-            timeOut("fullName-message",2000)
+            timeOut("fullName-message",2000);
     
           } else if (data.email) {
-            console.log("email");
+            emailMessage.textContent = data.email;
           } else if (data.password) {
             console.log("password");
           } else if (data.confirmPassword) {

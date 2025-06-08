@@ -48,7 +48,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'muhammadaliyumuazu@gmail.com'
-EMAIL_HOST_PASSWORD = '@Amir2451'
+EMAIL_HOST_PASSWORD = 'ssotkafpvuivvrye'
 DEFAULT_FROM_EMAIL = 'muhammadaliyumuazu@gmail.com'
 
 MIDDLEWARE = [

@@ -1,356 +1,127 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-    <link rel="stylesheet" href="ind{ex.css">
-    <style>
-        *{
-            % load statuc -color: #324543;
-            text-align: center;
-            /* background: fixed; */
-            /* background-color: white; */
-        }
-        header{
-            margin-top: 100px;
-            font-family: sans-serif;
-            font-size: 70px;
-            margin-bottom: 20px;
-            color: whitesmoke;
-        }
-        /* #contener{ */
-            /* width: 100vmax;
-            height: 100vmax;
-            padding: 40px;
-            border-radius: 10px;
-            background-color: #324543; */
-        /* } */
-        input{
-            margin-bottom: 20px;
-            width: 80%;
-            height: 40px;
-            border: none;
-        }
-        #submit{
-            background: black;
-            color: whitesmoke;
-        }
-        h5{
-            align-self: flex-start;
-            
-        }
-    </style>
-</head>
-<body>
-    <form>
-        <header>login</header>
-        
-        <input type="text" id="info" placeholder="username/email" required>
-        <br>
-        <input type="password" id="password" placeholder="password" required>
-        <h5>forgot password ?</h5>
-        <input id="submit" type="submit" value="login">
-    </form>
-</body>
-
-</html> -->
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Palm Trees Oil & Agro</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Font Awesome for icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-yH6V6S0c9N+8kH4VZDlHGb+Mx6R1jE8uI5F5zX0XzKPaHO48avj3v1RvowZ8TnynfT7Qj/DBttk5dUkqnqVVkQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-  <style>
-    /* General Reset & Typography */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background-color: #333;
-  line-height: 1.6;
-  color: #333;
-}
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: #2c3e50;
-}
-
-nav .logo {
-  color: #ecf0f1;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-nav .nav-links {
-  list-style: none;
-  display: flex;
-}
-
-nav .nav-links li {
-  margin-left: 20px;
-}
-
-nav .nav-links li a {
-  color: #ecf0f1;
-  text-decoration: none;
-  font-size: 1em;
-}
-
-nav .nav-links li a:hover {
-  color: #f1c40f;
-}
-
-/* Hero Section */
-.hero {
-  background: url("{% static 'palm.jpeg' %}") no-repeat center center/cover;
-  color: #fff;
-  height: 80vh;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 20px;
-}
-
-.hero h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px #000;
-}
-
-.hero p {
-  font-size: 1.2em;
-  margin-bottom: 30px;
-  text-shadow: 1px 1px 2px #000;
-}
-
-.btn {
-  background: #f1c40f;
-  color: #2c3e50;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.btn:hover {
-  background: #ecaf08;
-}
-
-/* Container */
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px 0;
-}
-
-/* Sections */
-section {
-  padding: 40px 0;
-  background: #f9f9f9;
-  border-bottom: 1px solid #ddd;
-}
-
-section:nth-of-type(even) {
-  background: #fff;
-}
-
-/* Products Section */
-.products-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.product {
-  width: 300px;
-  margin: 20px;
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-}
-
-.product img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-/* Gallery Section */
-.gallery-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.gallery-container img {
-  width: 300px;
-  height: 200px;
-  object-fit: cover;
-  margin: 10px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-}
-
-/* Contact Section */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form input,
-form textarea {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-form button {
-  padding: 10px;
-  border: none;
-  background: #2c3e50;
-  color: #ecf0f1;
-  font-size: 1em;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-form button:hover {
-  background: #1a252f;
-}
-
-/* Footer */
-footer {
-  background: #2c3e50;
-  color: #ecf0f1;
-  padding: 20px 0;
-  text-align: center;
-}
-
-footer .social a {
-  color: #ecf0f1;
-  margin: 0 10px;
-  font-size: 1.2em;
-  text-decoration: none;
-}
-
-  </style>
-</head>
-<body>
-  <!-- Header & Navigation -->
-  <header>
-    <nav>
-      <div class="logo">Palm Trees Oil & Agro</div>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-    <div id="home" class="hero">
-      <h1>Experience the Excellence of Nature</h1>
-      <p>Premium Palm Oil and Agro Products for a Better Life</p>
-      <a href="#contact" class="btn">Get in Touch</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palm Trees Oil & Agro</title>
+    <link
+      rel="icon"
+      type="images"
+      href="{% static 'images/palm.png' %}"
+      style="border-radius: 50px"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <style>
+      .hero {
+        background: url("{% static 'palm.jpeg' %}") no-repeat center
+          center/cover;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <div id="loader">
+      <div class="spinner"></div>
     </div>
-  </header>
+    <header>
+      <nav>
+        <div class="logo">Palm Trees Oil & Agro</div>
+        <div class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div id="home" class="hero">
+        <h1>Experience the Excellence of Nature</h1>
+        <p>Premium Palm Oil and Agro Products for a Better Life</p>
+        <!-- <a onclick="action()" class="btn">SingUp/Login</a> -->
+        <a onclick="showLoader()" href="{% url 'register' %}" class="btn"
+          >SingUp/Login</a
+        >
+      </div>
+    </header>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
+    <section id="about">
       <h2>About Us</h2>
-      <p>
-        At Palm Trees Oil & Agro, we pride ourselves on producing and delivering
-        premium quality palm oil, groundnut oil, and a range of agricultural products.
-        Our commitment to sustainable farming and innovative processing techniques sets us apart.
+      <p style="text-align: center">
+        Palm Trees Oil & Agro is committed to delivering high-quality, organic
+        palm oil and a variety of agro products. We are passionate about
+        sustainable agriculture and supporting local farmers.
       </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- Products Section -->
-  <section id="products">
-    <div class="container">
+    <section id="products">
       <h2>Our Products</h2>
       <div class="products-container">
         <div class="product">
-          <img src="palm-oil.jpg" alt="Palm Oil" />
+          <img
+            src="https://images.unsplash.com/photo-1615485731454-79c45fd3b723?auto=format&fit=crop&w=500&q=80"
+            alt="Palm Oil"
+          />
           <h3>Palm Oil</h3>
-          <p>Pure, natural palm oil produced with sustainable practices.</p>
+          <p>Pure and organic red palm oil straight from the source.</p>
         </div>
         <div class="product">
-          <img src="groundnut-oil.jpg" alt="Groundnut Oil" />
+          <img
+            src="https://images.unsplash.com/photo-1587202372775-989b279c0992?auto=format&fit=crop&w=500&q=80"
+            alt="Groundnut Oil"
+          />
           <h3>Groundnut Oil</h3>
-          <p>Rich and nutritious groundnut oil, soon to be in our range.</p>
+          <p>Healthy and cholesterol-free groundnut oil for cooking.</p>
+        </div>
+        <div class="product">
+          <img
+            src="https://images.unsplash.com/photo-1551085254-c654f4fca586?auto=format&fit=crop&w=500&q=80"
+            alt="Agro Produce"
+          />
+          <h3>Agro Produce</h3>
+          <p>Fresh farm produce and processed agricultural goods.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Gallery Section -->
-  <section id="gallery">
-    <div class="container">
+    <section id="gallery">
       <h2>Gallery</h2>
       <div class="gallery-container">
-        <img src="gallery1.jpg" alt="Gallery Image 1" />
-        <img src="gallery2.jpg" alt="Gallery Image 2" />
-        <img src="gallery3.jpg" alt="Gallery Image 3" />
+        <img
+          src="https://images.unsplash.com/photo-1615485731454-79c45fd3b723?auto=format&fit=crop&w=500&q=80"
+          alt="Palm Oil"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1587202372775-989b279c0992?auto=format&fit=crop&w=500&q=80"
+          alt="Farm"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1551085254-c654f4fca586?auto=format&fit=crop&w=500&q=80"
+          alt="Agro"
+        />
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="container">
+    <section id="contact">
       <h2>Contact Us</h2>
-      <form action="#" method="post">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <textarea name="message" placeholder="Your Message" required></textarea>
+      <form>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
         <button type="submit">Send Message</button>
       </form>
-      <div class="contact-info">
-        <p><i class="fas fa-phone"></i> +234 801 234 5678</p>
-        <p><i class="fas fa-envelope"></i> info@palmtreesagro.com.ng</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Palm Trees Oil & Agro. All rights reserved.</p>
-      <div class="social">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-  </footer>
-</body>
+    <footer>
+      <p>&copy; 2025 Palm Trees Oil & Agro. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{% static 'js/index.js' %}"></script>
+  </body>
 </html>
