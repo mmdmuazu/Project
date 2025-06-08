@@ -8,6 +8,7 @@ from palm_trees.models import Register
 from .utils import generate_token, verify_token
 import json
 from json import load,dump
+from django.templatetags.static import static
 try:
     with open("./users.db", "r") as db:
         users = load(db)
@@ -18,6 +19,9 @@ def send_verification(email, request):
     token = generate_token(email)
     link = request.build_absolute_uri(f'/verify/{token}/')
 
+    image_url = request.build_absolute_uri(static('images/palm.png'))
+    print(image_url)
+
     subject = "Verify Your Email – PALM TREES OIL & AGRO"
     from_email = settings.EMAIL_HOST_USER  # you can use a domain noreply email
     to_email = [email]
@@ -25,6 +29,7 @@ def send_verification(email, request):
     # Context for HTML template
     context = {
         'verification_link': link,
+        'image_url': image_url,
         'company_name': "PALM TREES OIL & AGRO",
         'advert_text': "Welcome to Palm Trees – Get the purest palm oil direct from the source!",
     }

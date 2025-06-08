@@ -659,3 +659,15 @@
 
 
 
+import smtplib
+
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+
+server.login('muhammadaliyumuazu@gmail.com', 'ssotkafpvuivvrye')
+
+message = "Subject: Test Email\n\nThis is a test email from Django setup."
+server.sendmail('muhammadaliyumuazu@gmail.com', 'mdmuazu1@gmail.com', message)
+
+print("Email sent successfully!")
+server.quit()
