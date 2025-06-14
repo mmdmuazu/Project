@@ -1,0 +1,20 @@
+function switchChannel(channelFile) {
+  const video = document.getElementById("tv");
+  video.src = "videos/" + channelFile;
+  video.play();
+}
+const SECRET_KEY = "unlock123";
+
+function unlockChannel() {
+  const key = document.getElementById("unlockKey").value;
+  const message = document.getElementById("unlockMessage");
+
+  if (key === SECRET_KEY) {
+    switchChannel("channel1.mp4");
+    message.textContent = "✅ Channel unlocked!";
+    message.style.color = "green";
+  } else {
+    message.textContent = "❌ Wrong key!";
+    message.style.color = "red";
+  }
+}

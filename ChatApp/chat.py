@@ -3,7 +3,7 @@ import sqlite3
 import uuid
 
 app = Flask(__name__)
-ADMIN_USERNAME = "amir"  # Define the admin user
+ADMIN_USERNAME = "Amir"  # Define the admin user
 
 def init_db():
     with sqlite3.connect("chat.db") as conn:
@@ -32,7 +32,7 @@ def home():
 
 @app.route('/register', methods=['POST'])
 def register():
-    username = request.json.get("username")
+    username = request.form.get("username")
     if not username:
         return "Please provide a username"
 
@@ -69,7 +69,12 @@ def send_message():
     
     with sqlite3.connect("chat.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO messages (sender, recipient, text) VALUES (?, ?, ?)", (sender, recipient, text))
+        if sender == ADMIN_USERNAME:
+            all_users = cursor.execute("SELECT username FROM users WHERE username != ?",(ADMIN_USERNAME,)).fetchall()
+            for user in all_users:
+                cursor.execute("INSERT INTO messages (sender, recipient, text) VALUES (?, ?, ?)", (sender, user[0], text))
+        else:
+            cursor.execute("INSERT INTO messages (sender, recipient, text) VALUES (?, ?, ?)", (sender, recipient, text))
         conn.commit()
     return jsonify({'success': True})
 

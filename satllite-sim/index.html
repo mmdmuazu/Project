@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mini Satellite Receiver</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>📡 My Home Receiver</h1>
+    <div id="channel-buttons">
+      <button onclick="switchChannel('channel1.mp4')">Channel 1</button>
+      <button onclick="switchChannel('channel1.mp4')">Channel 2</button>
+      <button onclick="unlockChannel()">🔒 Channel 3 (Locked)</button>
+      <input type="password" id="unlockKey" placeholder="Enter unlock key" />
+      <p id="unlockMessage"></p>
+    </div>
+    <video id="tv" width="640" controls autoplay>
+      <source src="videos/channel1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -10,11 +10,13 @@ import json
 from json import load,dump
 from django.templatetags.static import static
 try:
-    with open("./users.db", "r") as db:
+    with open("./users.json", "r") as db:
         users = load(db)
 except Exception:
-    with open("./users.db","w") as db:
+    with open("./users.json","w") as db:
         users = {}
+
+print(users)
 def send_verification(email, request):
     token = generate_token(email)
     link = request.build_absolute_uri(f'/verify/{token}/')
@@ -23,7 +25,7 @@ def send_verification(email, request):
     print(image_url)
 
     subject = "Verify Your Email – PALM TREES OIL & AGRO"
-    from_email = settings.EMAIL_HOST_USER  # you can use a domain noreply email
+    from_email = settings.EMAIL_HOST_USER  
     to_email = [email]
 
     # Context for HTML template
@@ -60,13 +62,20 @@ def send_verification(email, request):
 # ✅ Handle email verification
 def verify_email(request, token):
     email = verify_token(token)
+    print(email,users)
     if email:
         try:
-            user = Register.objects.get(email=email)
-            user.verified = True  # Add this field to your model if not already
-            user.save()
-            return HttpResponse(f"Email {email} verified successfully!")
-        except Register.DoesNotExist:
+            for info in users.values():
+                if info['email'] == email:
+                    user = Register(fullName=info['fullName'], email=info['email'], password=info['password'], verified=True)
+                    user.save()
+                    del users[info['email']]
+                    return HttpResponse(f"Email {email} verified successfully!")
+
+            # user = Register.objects.get(email=email)
+            # user.verified = True  # Add this field to your model if not already
+            # user.save()
+        except Exception:
             return HttpResponse("User not found.")
     return HttpResponse("Invalid or expired verification link.")
 
@@ -91,16 +100,19 @@ def register(request):
         password = data.get('password')
         confirm_password = data.get('confirmPassword')
 
-        # if check(email):
-        #     return JsonResponse({"success":False,"email": "User already exists"})
+        if check(email):
+            if email in users.values():
+                del users[email]
+            return JsonResponse({"success":False,"email":"email already exists"})
 
         if password != confirm_password:
             return JsonResponse({"success":False,"confirmPassword": "Password mismatch!"})
 
 
-        user = Register(fullName=full_name, email=email, password=password, verified=False)
-        user.save()
-        
+        users[email] = {"fullName":full_name,"email":email,"password":password}
+        with open('./users.json' ,'w') as db:
+            dump(users,db)
+            db.close()
         send_verification(email, request)
         return JsonResponse({"success":True,"message": "Registration successful! Check your email to verify."})
 
