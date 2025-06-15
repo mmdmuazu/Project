@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppI
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import json, os
 
-TOKEN = "7424542157:AAE0-u3H_tc4ReJ1Ju9Zij9GrZ-FW081v2A"
+TOKEN = "7424542157:AAE0-u3H_tc4ReJ1Ju9Zij9GrZ-FW08lv2A"
 WEBAPP_URL = "https://dollar.pythonanywhere.com"  # <-- REPLACE THIS
 
 USER_FILE = "users.json"
