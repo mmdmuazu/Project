@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mining Mini App</title>
+</head>
+<body>
+  <h1 id="welcome">Loading...</h1>
+  <p id="balance"></p>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    const user = tg.initDataUnsafe.user;
+    const userId = user?.id;
+
+    fetch(`/api/user/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('welcome').textContent = `Welcome ${data.name}!`;
+        document.getElementById('balance').textContent = `Balance: ${data.balance} coins`;
+      })
+      .catch(() => {
+        document.getElementById('welcome').textContent = "User not found!";
+      });
+  </script>
+</body>
+</html>

@@ -46,16 +46,16 @@ def get_username_by_address(user_address):
     return 'username not found'
 
 try:
-    with open('./users.db', 'r') as db:
+    with open('./DB/users.db', 'r') as db:
         users = load(db)
 except Exception:
-    with open('./users.db', 'w') as db:
+    with open('./DB/users.db', 'w') as db:
         users = {}
 try:
-    with open('./accounts.db', 'r') as db:
+    with open('./DB/accounts.db', 'r') as db:
         accounts = load(db)
 except Exception:
-    with open('./accounts.db', 'w') as db:
+    with open('./DB/accounts.db', 'w') as db:
         accounts = {}
 try:
     with open('./transactions.db','r') as db:
@@ -117,10 +117,10 @@ def index():
             'balance': 0
         }
 
-        with open('./users.db', 'w') as db:
+        with open('./DB/users.db', 'w') as db:
             dump(users, db)
         db.close()
-        with open('./accounts.db', 'w') as db:
+        with open('./DB/accounts.db', 'w') as db:
             dump(accounts, db)
         db.close()
     return redirect(url_for("dashboard",userid=user_id))
@@ -158,9 +158,9 @@ def dashboard(userid):
         transfereble_balance = userBalance//10000*20
         user['balance'] -= userBalance
         accounts[user_address]['balance'] += transfereble_balance
-        with open('./accounts.db', 'w') as db:
+        with open('./DB/accounts.db', 'w') as db:
             dump(accounts,db)
-        with open('./users.db', 'w') as db:
+        with open('./DB/users.db', 'w') as db:
             dump(users,db)
     else:
        transfereble_balance = address['balance']
@@ -195,7 +195,7 @@ def update_balance():
         return jsonify({'error': 'Amount must be positive'}), 400
 
     user['balance'] += amount
-    with open('./users.db', 'w') as db:
+    with open('./DB/users.db', 'w') as db:
         dump(users, db)
     db.close()
 
@@ -229,7 +229,7 @@ def mark_link_used():
     else:
         user['links'].append({'href': href, 'used': True})
 
-    with open('./users.db', 'w') as db:
+    with open('./DB/users.db', 'w') as db:
         dump(users, db)
 
     return jsonify({'success': True})
@@ -268,7 +268,7 @@ def transfer():
         dump(transactions, db)
     accounts[user_address]['balance'] -= amount
     accounts[recipient_address]['balance'] += amount
-    with open('./accounts.db', 'w') as db:
+    with open('./DB/accounts.db', 'w') as db:
       dump(accounts, db)
     username = get_username_by_address(recipient_address)
     return jsonify({'success': True, 'message': f"Transfer successful: {amount} coins to {username} ✔"}), 200
