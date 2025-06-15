@@ -5,7 +5,7 @@ print('/start clicked')
 
 
 async def start(update, context):
-    image_path = 'coin1.png'
+    image_path = 'coin.png'
     user = update.effective_user
     username = update.message.from_user.username
     chat = update.message.chat_id
@@ -17,7 +17,7 @@ async def start(update, context):
     print(f"Received the referral code: {referral_code}")
 
     # Create an InlineKeyboardButton with a URL
-    play_button = WebAppInfo(url=f"https://dollar.pythonanywhere.com/?user_id={chat}&username={username}&name={user.full_name}&referral_code={referral_code}")
+    play_button = WebAppInfo(url=f"https://dollar.pythonanywhere.com")
     telegram_button = InlineKeyboardButton("Join our community", url="https://t.me/dollar_coin_channel")
     twitter_button = InlineKeyboardButton("follow us on X", url="https://x.com/Dollarcoin32536?t=Gt4UETs7z0mmJppG6-rVLQ&s=0")
 
