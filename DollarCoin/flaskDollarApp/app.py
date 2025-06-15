@@ -1,3 +1,29 @@
+# @app.route('/download', methods=['GET','POST'])
+# def download_video():
+#     if request.method == 'POST':
+#         data = request.json
+#         url = data.get('link')  # Get the video URL from the user
+#         try:
+#             # Use yt-dlp to get the direct download link
+#             ydl_opts = {
+#                 'username': os.getenv('YT_USERNAME'),  # Fetches from an environment variable
+#                 'password': os.getenv('YT_PASSWORD'),
+#                 'quiet': True,  # Suppress console output
+#                 'format': 'best',  # Choose the best video format
+#                 'verbose': True,
+#                 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+
+#             }
+#             with YoutubeDL(ydl_opts) as ydl:
+#                 info = ydl.extract_info(url, download=False)  # Fetch info without downloading
+#                 direct_url = info['url']  # Get the direct video URL
+
+#             # Return the direct URL to the user
+#             return jsonify({'message':'Done','link': str(direct_url)}),200
+
+#         except Exception as e:
+#             return jsonify({'message': str(e)}), 400
+#     return render_template('index.html')
 from flask import Flask, render_template, request,redirect, url_for, jsonify
 from json import load, dump
 import uuid
@@ -37,32 +63,6 @@ try:
 except Exception:
     with open('./transactions.db','w') as db:
         transactions={}
-@app.route('/download', methods=['GET','POST'])
-def download_video():
-    if request.method == 'POST':
-        data = request.json
-        url = data.get('link')  # Get the video URL from the user
-        try:
-            # Use yt-dlp to get the direct download link
-            ydl_opts = {
-                'username': os.getenv('YT_USERNAME'),  # Fetches from an environment variable
-                'password': os.getenv('YT_PASSWORD'),
-                'quiet': True,  # Suppress console output
-                'format': 'best',  # Choose the best video format
-                'verbose': True,
-                'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-
-            }
-            with YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=False)  # Fetch info without downloading
-                direct_url = info['url']  # Get the direct video URL
-
-            # Return the direct URL to the user
-            return jsonify({'message':'Done','link': str(direct_url)}),200
-
-        except Exception as e:
-            return jsonify({'message': str(e)}), 400
-    return render_template('index.html')
 @app.route("/")
 def index():
     user_id = request.args.get("user_id")

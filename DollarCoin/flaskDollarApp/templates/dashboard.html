@@ -455,7 +455,23 @@
         </div>
         <!-- withdraw menu -->
         <div style="margin-bottom: 100px;" id="withdraw-menu" class="content">
-           c
+            <!-- coin image -->
+            <img class="task-img" src="{{url_for('static', filename='coin.png')}}" alt="Dollar Coin">
+            <br>
+            <h3>Balance:{{sbalance}}</h3>
+
+                <h5><span style="color: red; font-size: large;">Notice:</span> <span>you can only transfer your dollar coins to an existing user before lunching</span></h5>
+                <input title="your address" id="input-address" type="text" value="{{ dashboard_address }}"><button id="copy-address" onclick="copyaddress()" >copy</button><br>
+            <form action="{{ url_for('transfer') }}" method="post" id="transfer-form">
+                <div id="alert-box" class="alert"></div> <!-- Styled alert box -->
+                <input type="text" name="recipient_address" placeholder="Recipient Address" required>
+                <br>
+                <input type="number" name="amount" placeholder="Amount" required>
+                <br>
+                <input type="submit" id="submit" value="Send">
+            </form>
+
+        </div>
         <div style="margin-top: 100px;" id="airtime-menu" class="content">
             <h1>Airtime</h1>
             <form  style="border-radius: 5px;" id="airtime-form">
