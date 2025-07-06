@@ -87,10 +87,58 @@ def check(email):
 
 # ✅ Home page
 def index(request):
-    products = Product.objects.all()
-    return render(request, 'index.html', {'product': products})
+    # products = Product.objects.all()
+    products = [
+    {
+        'id': 1,
+        'name': 'Palm Oil',
+        'image': 'images/palm-oil.jpg',
+        'price': 8000,
+        'discount': 25,
+    },
+    {
+        'id': 2,
+        'name': 'Groundnut Oil',
+        'image': 'images/groundnut-oil.jpg',
+        'price': 7500,
+        'discount': 20,
+    },
+    {
+        'id': 3,
+        'name': 'Agro Produce',
+        'image': 'images/agro.jpg',
+        'price': 10000,
+        'discount': 15,
+    },
+    {
+        'id': 4,
+        'name': 'Produce',
+        'image': 'images/agro.jpg',
+        'price': 10000,
+        'discount': 100,
+    },
+]
+    return render(request, 'test.html', {'products': products})
 
-
+def cart(request):
+    # Dummy cart data for testing
+    cart_items = [
+        {
+            'id': 1,
+            'name': 'Palm Oil',
+            'image': 'images/palm-oil.jpg',
+            'price': 8000,
+            'quantity': 2,
+        },
+        {
+            'id': 2,
+            'name': 'Groundnut Oil',
+            'image': 'images/groundnut-oil.jpg',
+            'price': 7500,
+            'quantity': 1,
+        },
+    ]
+    return render(request, 'cart.html', {'cart_items': cart_items})
 # ✅ Register new user
 def register(request):
     if request.method == "POST":
@@ -123,4 +171,10 @@ def register(request):
 
 # ✅ Login page (dummy call to test email)
 def login(request):
+    if request.method == "POST":
+        # data = json.loads(request.body.decode('utf-8'))
+        data = request.body.decode("utf-8")
+        # username = data('username')
+        print((data))
+        return JsonResponse({"good":'username'})
     return render(request, 'signin.html')

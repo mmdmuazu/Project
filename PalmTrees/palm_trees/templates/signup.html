@@ -1,83 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Signup</title>
-    <style>
-      * {
-        background-color: #f4f4f4;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-      }
-      header h1 {
-        margin-top: 60px;
-        color: #333;
-        padding: 10px;
-        font-size: 50px;
-      }
-      form {
-        padding: 20px;
-        /* box-shadow: 1px 1px 5px #333; */
-      }
-      input {
-        border: none;
-        border-radius: 10px;
-        background-color: white;
-        width: 100%;
-        height: 50px;
-        margin-top: 10px;
-        outline: none;
-      }
-      #submit {
-        background-color: #34495e;
-        color: #f4f4f4;
-      }
-      a {
-        color: #e67e22;
-        font-size: medium;
-      }
-      a:hover {
-        border-bottom: 2px solid #e67e22;
-      }
-      /* i {
-        background-color: red;
-        padding: 20px;
-        border-radius: 10px;
-        color: #f4f4f4;
-      } */
-
-      #loader {
-        display: flex;
-        position: fixed;
-        z-index: 9999;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.8);
-        justify-content: center;
-        align-items: center;
-      }
-      .spinner {
-        background-color: transparent;
-        height: 50px;
-        width: 50px;
-        border-top: 2px solid #34495e;
-        border-bottom: 2px solid #e67e22;
-        border-right: 2px solid transparent;
-        border-left: 2px solid transparent;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <style></style>
   </head>
   <body>
     <div id="loader">
@@ -88,6 +17,7 @@
     </header>
     <form id="form">
       {% csrf_token %}
+      <input name="register-url" type="hidden" value="{% url 'register' %}" />
       <div id="message"></div>
       <br />
       <input
@@ -139,90 +69,5 @@
       >Already have an account login?</a
     >
   </body>
-  <script>
-    const getId = (id) => document.getElementById(id);
-    const fullNameField = getId("fullName");
-    const emailField = getId("email");
-    const passwordField = getId("password");
-    const confirmPasswordField = getId("confirmPassword");
-    const passwordMessage = getId("password-message");
-    const fullNameMessage = getId("fullName-message");
-    const emailMessage = getId("email-message");
-    const confirmPasswordMessage = getId("confirmPassword-message");
-    const message = getId("message");
-
-    function showLoader() {
-      const loader = document.getElementById("loader");
-      if (loader) loader.style.display = "flex";
-    }
-
-    function hideLoader() {
-      const loader = document.getElementById("loader");
-      if (loader) loader.style.display = "none";
-    }
-
-    // Hide loader on normal load
-    window.onload = hideLoader;
-
-    // Hide loader when navigating back (from cache)
-    window.addEventListener("pageshow", function (event) {
-      hideLoader();
-    });
-    const timeOut = (id, time) =>
-      setTimeout((event) => {
-        getId(id).textContent = "";
-      }, time);
-    const myForm = getId("form");
-    myForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      showLoader();
-      fetch("{% url 'register' %}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": document.querySelector(
-            "input[name=csrfmiddlewaretoken]"
-          ).value,
-        },
-        body: JSON.stringify({
-          fullName: fullNameField.value,
-          email: emailField.value,
-          password: passwordField.value,
-          confirmPassword: confirmPasswordField.value,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data) {
-            hideLoader();
-          }
-          if (data.success){
-            message.textContent = data.message;
-            message.style.color = "green";
-            timeOut("message",2000);
-          }
-          else if (data.fullName) {
-            fullNameMessage.textContent = data.fullName;
-            fullNameField.style.border = "2px solid red";
-            timeOut("fullName-message",2000);
-    
-          } else if (data.email) {
-            emailMessage.textContent = data.email;
-          } else if (data.password) {
-            console.log("password");
-          } else if (data.confirmPassword) {
-            confirmPasswordMessage.textContent = data.confirmPassword;
-            confirmPasswordField.style.border = "2px solid red";
-            timeOut("confirmPassword-message", 2000);
-          } else {
-            console.log("nothing");
-          }
-        })
-        .catch((error) => {
-          hideLoader();
-          message.textContent = "Check your internet connection";
-          timeOut("message", 2000);
-        });
-    });
-  </script>
+  <script src="{% static 'js/signup.js' %}"></script>
 </html>

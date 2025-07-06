@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cart - Palm Trees Oil & Agro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="max-w-4xl mx-auto my-12 p-6 bg-white shadow-lg rounded">
+      <h1 class="text-3xl font-bold mb-6">🛒 Your Cart</h1>
+      <div id="cart-items" class="space-y-4"></div>
+
+      <div class="text-right mt-8">
+        <p class="text-xl font-bold mb-4">
+          Total: ₦<span id="total">0.00</span>
+        </p>
+        <button onclick="payWithPaystack()" class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700">
+          Checkout with Paystack
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const cartItemsDiv = document.getElementById("cart-items");
+      const totalSpan = document.getElementById("total");
+
+      function renderCart() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let total = 0;
+        cartItemsDiv.innerHTML = "";
+
+        if (cart.length === 0) {
+          cartItemsDiv.innerHTML = `<p class="text-gray-500">Your cart is empty.</p>`;
+          return;
+        }
+
+        cart.forEach(item => {
+          const html = `
+            <div class="flex justify-between items-center border-b pb-4">
+              <div>
+                <h2 class="text-xl font-semibold">${item.name}</h2>
+                <p class="text-gray-500">₦${item.price.toLocaleString()}</p>
+              </div>
+              <button onclick="removeItem(${item.id})" class="text-red-600 hover:underline">Remove</button>
+            </div>`;
+          cartItemsDiv.innerHTML += html;
+          total += item.price;
+        });
+
+        totalSpan.innerText = total.toLocaleString();
+      }
+
+      function removeItem(id) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart = cart.filter(item => item.id !== id);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+
+      function payWithPaystack() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        const handler = PaystackPop.setup({
+          key: 'YOUR_PAYSTACK_PUBLIC_KEY',
+          email: 'customer@email.com',
+          amount: total * 100,
+          currency: 'NGN',
+          ref: '' + Math.floor(Math.random() * 1000000000 + 1),
+          callback: function(response) {
+            fetch("/save-order/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+              },
+              body: JSON.stringify({
+                name: "Customer Name",
+                email: "customer@email.com",
+                items: cart,
+                total: total,
+                reference: response.reference
+              })
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.status === "success") {
+                localStorage.removeItem("cart");
+                window.location.href = "/thank-you/";
+              } else {
+                alert("Error saving order.");
+              }
+            });
+          },
+          onClose: function() {
+            alert('Transaction was not completed');
+          }
+        });
+
+        handler.openIframe();
+      }
+
+      renderCart();
+    </script>
+  </body>
+</html>

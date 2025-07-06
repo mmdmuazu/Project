@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Signup</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Signup</title>
 
-  <!-- Loader Styles -->
-  <style>
-    #loader {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
+    <!-- Loader Styles -->
+    <style>
+      #loader {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.8);
+        justify-content: center;
+        align-items: center;
+      }
 
-    .spinner {
-      width: 50px;
-      height: 50px;
-      /* border: 6px solid #ddd; */
-      border-top: 6px solid #007bff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
+      .spinner {
+        width: 50px;
+        height: 50px;
+        /* border: 6px solid #ddd; */
+        border-top: 6px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body>
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      div {
+        width: 40px;
+        height: 5px;
+        background-color: black;
+        color: black;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Your page content -->
+    <h2>Signup Page</h2>
 
-  <!-- Your page content -->
-  <h2>Signup Page</h2>
+    <!-- Login link -->
+    <p>
+      Already a client?
+      <a onclick="">login</a>
+    </p>
 
-  <!-- Login link -->
-  <p>Already a client? 
-    <a href="http://127.0.0.1:8000/signin/">Login</a>
-  </p>
+    <!-- Loader -->
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+    <h1 id="text">amir</h1>
+    <input id="inp" type="text" />
 
-  <!-- Loader -->
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
-  <h1>amir
-    
-  </h1>
+    <!-- <ul> -->
+      <div></div>
+      <div></div>
+      <div></div>
+    <!-- </ul> -->
 
-  <!-- Loader Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const loader = document.getElementById('loader');
-      const allLinks = document.querySelectorAll('a');
-
-      allLinks.forEach(link => {
-        link.addEventListener('click', function () {
-          loader.style.display = 'flex';
-        });
-      });
-    });
-  </script>
-
-</body>
+    <!-- Loader Script -->
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
