@@ -1,0 +1,159 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palm Trees Oil & Agro</title>
+    <link
+      rel="icon"
+      type="images"
+      href="{% static 'images/palm.png' %}"
+      style="width: 50px; height: 50px"
+    />
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />
+    <style>
+      .hero {
+        background: url("{% static 'palm.jpeg' ' %}") no-repeat center
+          center/cover;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+    <header>
+      <nav>
+        <div class="logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
+        <div class="menu-toggle" id="menu-toggle">
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+        </div>
+        <ul class="nav-links" id="nav-links" data-aos="fade-left">
+          <li><a>Profile </a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+                    <li>
+            <a href="/cart" class="relative hover:text-yellow-400">
+              🛒 Cart
+              <span
+                id="cart-count"
+                class="absolute -top-2 -right-4 bg-red-600 text-white text-xs rounded-full px-1"
+                >0</span
+              >
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div onclick="remove()" id="home" class="hero">
+        <h1 data-aos="fade-up">Experience the Excellence of Nature</h1>
+        <p>Premium Palm Oil and Agro Products for a Better Life</p>
+        <!-- <a onclick="action()" class="btn">SingUp/Login</a> -->
+        <a onclick="showLoader()" href="{% url 'register' %}" class="btn"
+          >SingUp/Login</a
+        >
+      </div>
+    </header>
+
+    <section id="about" data-aos="fade-up">
+      <h2>About Us</h2>
+      <p style="text-align: center">
+        Palm Trees Oil & Agro is committed to delivering high-quality, organic
+        palm oil and a variety of agro products. We are passionate about
+        sustainable agriculture and supporting local farmers.
+      </p>
+    </section>
+
+    <section id="products" data-aos="fade-up">
+      <h2>Our Products</h2>
+      <div class="products-container">
+        <div class="product">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {% for product in products %}
+        <div class="bg-white rounded-xl shadow-lg p-4 text-center relative">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="{{ product.name }}"
+            class="w-full h-48 object-cover rounded"
+          />
+          <div
+            class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold"
+          >
+            {{ product.discount }}% OFF
+          </div>
+          <h3 class="text-xl font-semibold mt-4">{{ product.name }}</h3>
+          <p class="text-gray-500 line-through">₦{{ product.price }}</p>
+          <p class="text-xl font-bold text-green-600">
+            ₦{{ 1000
+            <!-- product.price|floatformat:2|add:'-'|add:product.price|mul:product.discount|div:100|floatformat:2 -->
+            }}
+          </p>
+          <button
+            onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.discount }}')"
+            class="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold transition"
+          >
+            Add to Cart
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+        <div class="product">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="Groundnut Oil"
+            data-aos="fade-right"
+          />
+          <h3>Groundnut Oil</h3>
+          <p>Healthy and cholesterol-free groundnut oil for cooking.</p>
+        </div>
+        <div class="product">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="Agro Produce"
+            data-aos="fade-right"
+          />
+          <h3>Agro Produce</h3>
+          <p>Fresh farm produce and processed agricultural goods.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" data-aos="fade-up">
+      <h2>Gallery</h2>
+      <div class="gallery-container">
+        <img src="{% static 'palm.jpeg' %}" alt="Palm Oil" />
+        <img src="{% static 'palm.jpeg' %}" alt="Farm" />
+        <img src="{% static 'palm.jpeg' %}" alt="Agro" />
+      </div>
+    </section>
+
+    <section id="contact" data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <form>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Palm Trees Oil & Agro. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <!-- <script>
+      window.addEventListener("load", () => {
+        document.getElementById("loader").style.display = "none";
+      });
+      AOS.init();
+    </script> -->
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline-First Web App</title>
+</head>
+<body>
+  <h2>Your Username:</h2>
+  <p><strong>Username:</strong> <span id="username">Loading...</span></p>
+
+  <form id="usernameForm">
+    <input name="username" placeholder="Enter your username"><br>
+    <button type="submit">Save Username</button>
+  </form>
+
+  <script>
+    // Function to load the username from localStorage or set a placeholder
+    function loadUsername() {
+      const storedUsername = localStorage.getItem('username');
+      if (storedUsername) {
+        document.getElementById('username').textContent = storedUsername;
+      } else {
+        document.getElementById('username').textContent = "No username saved!";
+      }
+    }
+
+    // Save username locally in localStorage and send it to the server if online
+    async function saveUsername(username) {
+      // Save to localStorage (offline behavior)
+      localStorage.setItem('username', username);
+
+      // Update UI to reflect the change immediately
+      document.getElementById('username').textContent = username;
+
+      try {
+        // Send data to the server if online
+        const response = await fetch('/update_username', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Server saved username:', data.username);
+        }
+      } catch (error) {
+        console.error('Error saving username to server:', error);
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('usernameForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+      const username = event.target.username.value;
+      saveUsername(username);
+    });
+
+    // Load username on page load
+    window.onload = loadUsername;
+  </script>
+</body>
+</html>

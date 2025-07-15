@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palm Trees Oil & Agro</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="icon" href="{% static 'images/palm.png' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />
+    <style>
+      .hero {
+        background: url("{% static 'palm.jpeg' %}") no-repeat center
+          center/cover;
+      }
+    </style>
+  </head>
+  <body class="font-sans text-gray-800">
+    <!-- Loader -->
+    <div
+      id="loader"
+      class="fixed inset-0 bg-white z-50 flex items-center justify-center"
+    >
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-yellow-500"
+      ></div>
+    </div>
+
+    <!-- Header & Hero -->
+    <header class="bg-black text-white" data-aos="fade-down">
+      <nav
+        class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto"
+      >
+        <div class="text-2xl font-bold text-yellow-400">
+          🌴 Palm Trees Oil & Agro
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+        </div>
+        <ul class="hidden md:flex space-x-6">
+          <li><a href="#home" class="hover:text-yellow-400">Home</a></li>
+          <li><a href="#about" class="hover:text-yellow-400">About</a></li>
+          <li>
+            <a href="#products" class="hover:text-yellow-400">Products</a>
+          </li>
+          <li><a href="#gallery" class="hover:text-yellow-400">Gallery</a></li>
+          <li><a href="#contact" class="hover:text-yellow-400">Contact</a></li>
+          <li>
+            <a href="/cart" class="relative hover:text-yellow-400">
+              🛒 Cart
+              <span
+                id="cart-count"
+                class="absolute -top-2 -right-4 bg-red-600 text-white text-xs rounded-full px-1"
+                >0</span
+              >
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div
+        id="home"
+        class="hero h-screen flex flex-col items-center justify-center text-center text-white px-4"
+      >
+        <h1
+          class="text-4xl md:text-6xl font-bold drop-shadow-lg"
+          data-aos="fade-right"
+        >
+          Experience the Excellence of Nature
+        </h1>
+        <p class="text-xl mt-4 mb-6">
+          Premium Palm Oil and Agro Products for a Better Life
+        </p>
+        <a
+          href="{% url 'register' %}"
+          class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-full transition duration-300"
+          >Sign Up / Login</a
+        >
+      </div>
+    </header>
+
+    <!-- About -->
+    <section
+      id="about"
+      class="py-16 px-6 max-w-4xl mx-auto text-center"
+      data-aos="fade-up"
+    >
+      <h2 class="text-3xl font-bold mb-4">About Us</h2>
+      <p>
+        Palm Trees Oil & Agro is committed to delivering high-quality, organic
+        palm oil and a variety of agro products. We are passionate about
+        sustainable agriculture and supporting local farmers.
+      </p>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="py-16 bg-gray-100 px-6" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {% for product in products %}
+        <div class="bg-white rounded-xl shadow-lg p-4 text-center relative">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="{{ product.name }}"
+            class="w-full h-48 object-cover rounded"
+          />
+          <div
+            class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold"
+          >
+            {{ product.discount }}% OFF
+          </div>
+          <h3 class="text-xl font-semibold mt-4">{{ product.name }}</h3>
+          <p class="text-gray-500 line-through">₦{{ product.price }}</p>
+          <p class="text-xl font-bold text-green-600">
+            ₦{{ 1000
+            <!-- product.price|floatformat:2|add:'-'|add:product.price|mul:product.discount|div:100|floatformat:2 -->
+            }}
+          </p>
+          <button
+            onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.discount }}')"
+            class="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold transition"
+          >
+            Add to Cart
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section
+      id="gallery"
+      class="py-16 px-6 max-w-6xl mx-auto"
+      data-aos="fade-right"
+    >
+      <h2 class="text-3xl font-bold text-center mb-8">Gallery</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <img
+          src="{% static 'palm.jpeg' %}"
+          alt="Palm Oil"
+          class="w-full h-64 object-cover rounded-xl shadow-md"
+        />
+        <img
+          src="{% static 'palm.jpeg' %}"
+          alt="Farm"
+          class="w-full h-64 object-cover rounded-xl shadow-md"
+        />
+        <img
+          src="{% static 'palm.jpeg' %}"
+          alt="Agro"
+          class="w-full h-64 object-cover rounded-xl shadow-md"
+        />
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 bg-gray-100 px-6" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-center mb-6">Contact Us</h2>
+      <form class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow space-y-4">
+        <input
+          type="text"
+          placeholder="Full Name"
+          class="w-full border border-gray-300 rounded px-4 py-2"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email Address"
+          class="w-full border border-gray-300 rounded px-4 py-2"
+          required
+        />
+        <textarea
+          rows="5"
+          placeholder="Your Message"
+          class="w-full border border-gray-300 rounded px-4 py-2"
+          required
+        ></textarea>
+        <button
+          type="submit"
+          class="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-full font-semibold"
+        >
+          Send Message
+        </button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white text-center py-6">
+      <p>&copy; 2025 Palm Trees Oil & Agro. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+     <script src="{% static 'js/app.js' %}"></script>
+    <script>
+      window.addEventListener("load", () => {
+        document.getElementById("loader").style.display = "none";
+      });
+      AOS.init();
+
+      function addToCart(id, name, price, discount) {
+        const finalPrice = price - (price * discount) / 100;
+        const item = { id, name, price: finalPrice };
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (!cart.find((p) => p.id === id)) cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert(`${name} added to cart!`);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Offline App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome, <span id="username">Loading...</span></h1>
+
+  <form id="usernameForm">
+    <input type="text" id="nameInput" placeholder="Enter username" required>
+    <button type="submit">Save</button>
+  </form>
+
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log("Service Worker registered"))
+        .catch(err => console.error("Service Worker registration failed", err));
+    }
+  </script>
+</body>
+</html>

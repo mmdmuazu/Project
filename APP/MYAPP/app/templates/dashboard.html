@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: linear-gradient(135deg, #1e1e2f, #31314f);
+            color: #ff4a57;
+        }
+        #container{
+            text-align: center;
+            background-color:  black;
+            height: 150px;
+            /* font-size: 25px; */
+            margin-top: -15px;
+            display: none;
+            width: 19%;
+        }
+        #About{
+            margin-top: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span onclick="ope()">open</span>
+        <div id="container"><h3>profile</h3>
+        <a href="#About">About</a>
+        <br>
+        <a href="#info">Info</a>
+        </div>sasddffdfgd
+        
+        <h1>welcome {{username}}</h1>
+        <div id="About">About</div>
+    </header>
+    <script>
+        function get(id){
+            result = document.getElementById(id)
+            return result
+        }
+        function ope(){
+            // document.getElementById('container').style.display = 'block'
+            const menu = get('container')
+            if (menu.style.display === 'block'){
+                // spans.innerHTML = 'close'
+                document.querySelector('span').innerHTML = 'open'
+                menu.style.display = 'none'
+                return
+            }else{
+                // spans.innerHTML = 'close'
+                document.querySelector('span').innerHTML = 'close'
+                menu.style.display = 'block'
+                return
+            }
+        }
+    </script>
+</body>
+</html>

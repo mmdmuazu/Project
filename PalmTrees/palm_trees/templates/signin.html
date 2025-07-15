@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}" />
+  </head>
+  <body>
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+    <header>
+      <h1>Login</h1>
+    </header>
+    <form>
+      {% csrf_token %}
+      <div id="message"></div>
+      <input name="login-url" type="hidden" value="{% url 'login' %}" />
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Email/Username"
+        required
+      />
+      <br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        required
+      />
+      <br />
+      <input id="submit" type="submit" value="Login" />
+    </form>
+    <div id="footer">
+      <a id="already" onclick="showLoader()" href="{% url 'register' %}"
+        >Dont have an account signup?</a
+      >
+      <a id="forgot" href="">Forgot password</a>
+    </div>
+  </body>
+  <script src="{% static 'js/signin.js' %}">
+  </script>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <style></style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="spinner"></div>
+    </div>
+    <header>
+      <h1>Signup</h1>
+    </header>
+    <form id="form">
+      {% csrf_token %}
+      <input name="register-url" type="hidden" value="{% url 'register' %}" />
+      <div id="message"></div>
+      <br />
+      <input
+        type="text"
+        name="fullName"
+        id="fullName"
+        placeholder="Full Name"
+        required
+      />
+      <br />
+      <div id="fullName-message" style="color: red"></div>
+      <br />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        required
+      />
+      <br />
+      <div id="email-message" style="color: red"></div>
+      <br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        required
+      />
+      <br />
+      <div id="password-message" style="color: red"></div>
+      <br />
+      <input
+        type="password"
+        name="confirmPassword"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        required
+      />
+      <br />
+      <div
+        id="confirmPassword-message"
+        style="display: block; color: red"
+      ></div>
+      <br />
+      <input id="submit" type="submit" value="Signup" />
+    </form>
+    <a onclick="showLoader()" href="{% url 'login'%}"
+      >Already have an account login?</a
+    >
+  </body>
+  <script src="{% static 'js/signup.js' %}"></script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        *{
+            text-align: center;
+            background: fixed;
+            /* background-color: white; */
+        }
+        header{
+            font-family: sans-serif;
+            font-size: 70px;
+        }
+        #contener{
+            padding: 40px;
+            border-radius: 10px;
+            background-color: #324543;
+        }
+        input{
+            margin-bottom: 20px;
+            width: 80%;
+            height: 40px;
+            border: none;
+        }
+        #submit{
+            background: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+    <form id="contener">
+        <header>login</header>
+        
+        <input type="text" id="info" placeholder="username/email" required>
+        <br>
+        <input type="password" id="password" placeholder="password" required>
+        <br>
+        <input id="submit" type="submit" value="login">
+    </form>
+</body>
+</html>
