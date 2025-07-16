@@ -11,6 +11,7 @@ body {
   color: #333;
 }
 
+
 nav {
   background: #2c3e50;
   color: #ecf0f1;
@@ -95,7 +96,8 @@ h2 {
   display: flex;
   gap: 1.5rem;
   justify-content: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  overflow: scroll;
 }
 
 .product {

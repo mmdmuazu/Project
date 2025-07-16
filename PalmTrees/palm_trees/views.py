@@ -118,7 +118,7 @@ def index(request):
         'discount': 100,
     },
 ]
-    return render(request, 'test.html', {'products': products})
+    return render(request, 'app.html', {'products': products})
 
 def cart(request):
     # Dummy cart data for testing

@@ -1,5 +1,5 @@
 setInterval(window.addEventListener("load", () => {
-  document.getElementById("loader").style.display = "block";
+  document.getElementById("loader").style.display = "none";
 }), 2000)
 AOS.init();
 
