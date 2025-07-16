@@ -11,7 +11,7 @@
       href="{% static 'images/palm.png' %}"
       style="width: 50px; height: 50px"
     />
-    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/app.css' %}" /> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />
@@ -19,6 +19,276 @@
       .hero {
         background: url("{% static 'palm.jpeg' ' %}") no-repeat center
           center/cover;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        background: #f4f4f4;
+        color: #333;
+      }
+
+      nav {
+        background: #2c3e50;
+        color: #ecf0f1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .menu-toggle {
+        display: none;
+        color: #ecf0f1;
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+      }
+
+      .nav-links li {
+        margin-left: 1.5rem;
+      }
+
+      .nav-links a {
+        color: #ecf0f1;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .hero {
+        background: url("{% static 'palm.jpeg' %}") no-repeat center
+          center/cover;
+        height: 100vh;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn {
+        background: #e67e22;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+      section {
+        padding: 60px 20px;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      h2 {
+        /* font-size: 70px; */
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #2c3e50;
+      }
+      #products {
+        display: flex;
+        /* flex-direction: row; */
+        overflow: scroll;
+        /* overflow-y: hidden; */
+      }
+      #products::-webkit-scrollbar {
+        display: none;
+      }
+
+      .products-container,
+      .gallery-container {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        /* flex-direction: column; */
+        /* flex-wrap: wrap; */
+        /* overflow: scroll; */
+      }
+
+      .product {
+        /* display: flex; */
+        width: 300px;
+        /* height: 200px;   */
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        /* flex: 1 1 250px; */
+      }
+
+      .product img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .product h3 {
+        margin-top: 0.8rem;
+      }
+
+      .gallery-container img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+      }
+
+      form input,
+      form textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      form button {
+        background: #2c3e50;
+        color: white;
+        padding: 0.8rem;
+        border: none;
+        width: 100%;
+        border-radius: 5px;
+      }
+
+      footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+      }
+      .menu-btn {
+        background-color: whitesmoke;
+        margin-top: 5px;
+        width: 40px;
+        height: 5px;
+      }
+
+      /* Mobile Styles */
+      @media (max-width: 768px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          width: 100%;
+          background: #34495e;
+          margin-top: 20px;
+          padding: 10px 0;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .nav-links li {
+          margin: 10px 0;
+          width: 100%;
+          text-align: center;
+        }
+
+        .hero {
+          height: auto;
+          padding: 80px 20px;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .products-container,
+        .gallery-container {
+          flex-direction: row;
+          align-items: center;
+        }
+
+        .product,
+        .gallery-container img {
+          width: 90%;
+        }
+        .product {
+          width: 250px;
+          height: 300px;
+        }
+
+        form input,
+        form textarea,
+        form button {
+          width: 100%;
+        }
+      }
+      #loader {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.8);
+        justify-content: center;
+        align-items: center;
+      }
+      .spinner {
+        height: 50px;
+        width: 50px;
+        border-top: 2px solid #34495e;
+        border-bottom: 2px solid #e67e22;
+        border-right: 2px solid transparent;
+        border-left: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
@@ -28,12 +298,13 @@
     </div>
     <header>
       <nav>
-        <div class="logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
         <div class="menu-toggle" id="menu-toggle">
           <div class="menu-btn"></div>
           <div class="menu-btn"></div>
           <div class="menu-btn"></div>
         </div>
+        <br>
+        <div class="logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
         <ul class="nav-links" id="nav-links" data-aos="fade-left">
           <li><a>Profile </a></li>
           <li><a href="#about">About</a></li>
@@ -71,18 +342,9 @@
       </p>
     </section>
 
+    <h2>Our Products</h2>
     <section id="products" data-aos="fade-up">
-      <h2>Our Products</h2>
       <div class="products-container">
-               <div class="product">
-          <img
-            src="{% static 'palm.jpeg' %}"
-            alt="Groundnut Oil"
-            data-aos="fade-right"
-          />
-          <h3>Groundnut Oil</h3>
-          <p>Healthy and cholesterol-free groundnut oil for cooking.</p>
-        </div>
         <div class="product">
           <img
             src="{% static 'palm.jpeg' %}"
@@ -111,16 +373,36 @@
           <h3>Agro Produce</h3>
           <p>Fresh farm produce and processed agricultural goods.</p>
         </div>
+        <div class="product">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="Agro Produce"
+            data-aos="fade-right"
+          />
+          <h3>Agro Produce</h3>
+          <p>Fresh farm produce and processed agricultural goods.</p>
+        </div>
+        <div class="product">
+          <img
+            src="{% static 'palm.jpeg' %}"
+            alt="Agro Produce"
+            data-aos="fade-right"
+          />
+          <h3>Agro Produce</h3>
+          <p>Fresh farm produce and processed agricultural goods.</p>
+        </div>
       </div>
     </section>
 
     <section id="gallery" data-aos="fade-up">
       <h2>Gallery</h2>
+      <marquee behavior="scroll" scrollamount="20">
       <div class="gallery-container">
-        <img src="{% static 'palm.jpeg' %}" alt="Palm Oil" />
+                 <img src="{% static 'palm.jpeg' %}" alt="Palm Oil" />
         <img src="{% static 'palm.jpeg' %}" alt="Farm" />
         <img src="{% static 'palm.jpeg' %}" alt="Agro" />
       </div>
+    </marquee>
     </section>
 
     <section id="contact" data-aos="fade-up">
