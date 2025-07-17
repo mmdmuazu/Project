@@ -26,13 +26,12 @@ window.addEventListener("pageshow", function (event) {
   hideLoader();
 });
 
-document.getElementById("menu-toggle").onclick = function () {
-  document.getElementById("nav-links").classList.toggle("active");
-};
+function openNav() {
+  document.getElementById("mySidenav").style.width = "150px";
+}
 
-function remove(){
-  document.getElementById("nav-links").classList.remove('active');
-  // return;
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
 }
 
 

@@ -32,6 +32,7 @@
         background: #f4f4f4;
         color: #333;
       }
+      header{text-align: center;}
 
       nav {
         background: #2c3e50;
@@ -40,11 +41,23 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem 2rem;
+        text-align: center;
       }
 
       .logo {
         font-size: 1.5rem;
         font-weight: bold;
+        text-align: center;
+        background-color: #2c3e50;
+        color: whitesmoke;
+        display: none;
+      }
+      .nav-logo{
+                font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        background-color: #2c3e50;
+        color: whitesmoke;
       }
 
       .menu-toggle {
@@ -199,38 +212,78 @@
       .menu-btn {
         background-color: whitesmoke;
         margin-top: 5px;
-        width: 40px;
-        height: 5px;
+        width: 30px;
+        height: 2px;
       }
+      .sidenav{
+        display: none;
+      }
+      #span{display: none;}
 
       /* Mobile Styles */
       @media (max-width: 768px) {
-        nav {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .menu-toggle {
-          display: block;
-        }
-
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          width: 100%;
-          background: #34495e;
-          margin-top: 20px;
-          padding: 10px 0;
-        }
-
-        .nav-links.active {
+        .logo{
           display: flex;
+          margin-left: 15%;
+          /* flex-direction: row; */
+          /* align-items: flex-end; */
+
+          
+        }
+        #span{
+          display: flex;
+          margin: 10px;
+          /* width: 90px; */
+        }
+        nav {
+          display: none;
+          /* flex-direction: column;
+          align-items: flex-start; */
+        }
+        header{
+          background-color: #2c3e50;
+          color: whitesmoke;
+        }
+        .menu-toggle{
+          display: block;
+          text-decoration: none;
+          margin-top: -11%;
         }
 
-        .nav-links li {
-          margin: 10px 0;
-          width: 100%;
-          text-align: center;
+      
+        .sidenav {
+          display: block;
+          height: 100%;
+          width: 200px;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #2c3e50;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 15px;
+        }
+
+        .sidenav a {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 18px;
+          color: #818181;
+          display: block;
+          transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+          margin-left: 50px;
         }
 
         .hero {
@@ -297,14 +350,41 @@
       <div class="spinner"></div>
     </div>
     <header>
+      <div class="logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
+      <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a>Profile </a>
+          <a href="#about">About</a>
+          <a href="#products">Products</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+          
+            <a href="/cart" class="relative hover:text-yellow-400">
+              🛒 Cart
+              <span
+                id="cart-count"
+                style="display: flex;  color: whitesmoke; border-radius: 50%; height: 20px; width: 20px; font-size: 15px; margin-left: 68%; margin-top: -15%; text-align: center;"
+                >30</span
+              >
+            </a>
+          
+</div>
+<span id="span" style="font-size:30px;cursor:pointer" onclick="openNav()">
+        <div class="menu-toggle" id="menu-toggle">
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+          <div class="menu-btn"></div>
+        </div>
+</span>
+
       <nav>
+      <div class="nav-logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
         <div class="menu-toggle" id="menu-toggle">
           <div class="menu-btn"></div>
           <div class="menu-btn"></div>
           <div class="menu-btn"></div>
         </div>
         <br>
-        <div class="logo" data-aos="fade-right">🌴 Palm Trees Oil & Agro</div>
         <ul class="nav-links" id="nav-links" data-aos="fade-left">
           <li><a>Profile </a></li>
           <li><a href="#about">About</a></li>
@@ -323,7 +403,7 @@
           </li>
         </ul>
       </nav>
-      <div onclick="remove()" id="home" class="hero">
+      <div onclick="closeNav()" id="home" class="hero">
         <h1 data-aos="fade-up">Experience the Excellence of Nature</h1>
         <p>Premium Palm Oil and Agro Products for a Better Life</p>
         <!-- <a onclick="action()" class="btn">SingUp/Login</a> -->
