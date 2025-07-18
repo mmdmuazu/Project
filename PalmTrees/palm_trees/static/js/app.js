@@ -27,7 +27,7 @@ window.addEventListener("pageshow", function (event) {
 });
 
 function openNav() {
-  document.getElementById("mySidenav").style.width = "150px";
+  document.getElementById("mySidenav").style.width = "250px";
 }
 
 function closeNav() {

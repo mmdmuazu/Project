@@ -178,3 +178,13 @@ def login(request):
         print((data))
         return JsonResponse({"good":'username'})
     return render(request, 'signin.html')
+
+def products(request):
+    return render(request,"products.html")
+
+def get_products(request):
+    products = {}
+    if request.method == "GET":
+        return JsonResponse({"products":"products"})
+    else:
+        return "post request not allowed"
