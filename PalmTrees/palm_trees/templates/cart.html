@@ -21,7 +21,7 @@
         </button>
       </div>
     </div>
-
+    <script src="{% static 'js/cart.js' %}"></script>
     <script>
       const cartItemsDiv = document.getElementById("cart-items");
       const totalSpan = document.getElementById("total");
@@ -69,8 +69,8 @@
         const total = cart.reduce((sum, item) => sum + item.price, 0);
 
         const handler = PaystackPop.setup({
-          key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-          email: 'customer@email.com',
+          key: 'pk_test_c5fa37d34f786d6de95a3939bf8fb1245343e9f7',
+          email: 'muhammadaliyumuazu@email.com',
           amount: total * 100,
           currency: 'NGN',
           ref: '' + Math.floor(Math.random() * 1000000000 + 1),

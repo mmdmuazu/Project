@@ -87,37 +87,37 @@ def check(email):
 
 # ✅ Home page
 def index(request):
-    # products = Product.objects.all()
-    products = [
-    {
-        'id': 1,
-        'name': 'Palm Oil',
-        'image': 'images/palm-oil.jpg',
-        'price': 8000,
-        'discount': 25,
-    },
-    {
-        'id': 2,
-        'name': 'Groundnut Oil',
-        'image': 'images/groundnut-oil.jpg',
-        'price': 7500,
-        'discount': 20,
-    },
-    {
-        'id': 3,
-        'name': 'Agro Produce',
-        'image': 'images/agro.jpg',
-        'price': 10000,
-        'discount': 15,
-    },
-    {
-        'id': 4,
-        'name': 'Produce',
-        'image': 'images/agro.jpg',
-        'price': 10000,
-        'discount': 100,
-    },
-]
+    products = Product.objects.all()
+#     products = [
+#     {
+#         'id': 1,
+#         'name': 'Palm Oil',
+#         'image': 'images/palm-oil.jpg',
+#         'price': 8000,
+#         'discount': 25,
+#     },
+#     {
+#         'id': 2,
+#         'name': 'Groundnut Oil',
+#         'image': 'images/groundnut-oil.jpg',
+#         'price': 7500,
+#         'discount': 20,
+#     },
+#     {
+#         'id': 3,
+#         'name': 'Agro Produce',
+#         'image': 'images/agro.jpg',
+#         'price': 10000,
+#         'discount': 15,
+#     },
+#     {
+#         'id': 4,
+#         'name': 'Produce',
+#         'image': 'images/agro.jpg',
+#         'price': 10000,
+#         'discount': 100,
+#     },
+# ]
     return render(request, 'app.html', {'products': products})
 
 def cart(request):
@@ -180,11 +180,71 @@ def login(request):
     return render(request, 'signin.html')
 
 def products(request):
-    return render(request,"products.html")
+    product = Product.objects.all()
+#     product = [
+#     {
+#         'id': 1,
+#         'name': 'Palm Oil',
+#         'image': 'images/palm-oil.jpg',
+#         'price': 8000,
+#         'discount': 25,
+#     },
+#     {
+#         'id': 2,
+#         'name': 'Groundnut Oil',
+#         'image': 'images/groundnut-oil.jpg',
+#         'price': 7500,
+#         'discount': 20,
+#     },
+#     {
+#         'id': 3,
+#         'name': 'Agro Produce',
+#         'image': 'images/agro.jpg',
+#         'price': 10000,
+#         'discount': 15,
+#     },
+#     {
+#         'id': 4,
+#         'name': 'Produce',
+#         'image': 'images/agro.jpg',
+#         'price': 10000,
+#         'discount': 100,
+#     },
+# ]
+    return render(request,"products.html",{"products":product})
 
 def get_products(request):
-    products = {}
+    products = [
+    {
+        'id': 1,
+        'name': 'Palm Oil',
+        'image': 'images/palm-oil.jpg',
+        'price': 8000,
+        'discount': 25,
+    },
+    {
+        'id': 2,
+        'name': 'Groundnut Oil',
+        'image': 'images/groundnut-oil.jpg',
+        'price': 7500,
+        'discount': 20,
+    },
+    {
+        'id': 3,
+        'name': 'Agro Produce',
+        'image': 'images/agro.jpg',
+        'price': 10000,
+        'discount': 15,
+    },
+    {
+        'id': 4,
+        'name': 'Produce',
+        'image': 'images/agro.jpg',
+        'price': 10000,
+        'discount': 100,
+    },
+]
     if request.method == "GET":
-        return JsonResponse({"products":"products"})
+        return JsonResponse({"products":products})
     else:
         return "post request not allowed"

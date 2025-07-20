@@ -1,14 +1,88 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products</title>
+  <style>
+    #products {
+      background-color: darkslategray;
+      padding: 20px;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet" />
 </head>
 <body>
-    <h1>Products </h1>
+  <div id="products" class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    {% for product in products %}
+    <div id="product" class="bg-white rounded-xl shadow-lg p-4 text-center relative">
+      <img
+        src="{% static 'palm.jpeg' %}"
+        alt="{{ product.name }}"
+        class="w-full h-48 object-cover rounded"
+      />
+      <div class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+        {{ product.discount }}% OFF
+      </div>
+      <h3 class="text-xl font-semibold mt-4">{{ product.name }}</h3>
+      <p>{{ product.description}}</p>
+      <p class="text-gray-500 line-through">₦{{ product.price }}</p>
+      <p id="discount-{{ product.id }}" class="text-xl font-bold text-green-600">
+        {{ product.price}}
+      </p>
+
+      <!-- Quantity Controls -->
+      <div class="flex justify-center items-center mt-2 space-x-4">
+        <button onclick="changeQty('{{ product.id }}', -1)" class="bg-gray-200 px-3 py-1 rounded-full">−</button>
+        <span id="qty-{{ product.id }}" class="font-bold text-lg">1</span>
+        <button onclick="changeQty('{{ product.id }}', 1)" class="bg-gray-200 px-3 py-1 rounded-full">+</button>
+      </div>
+
+      <!-- Total Price -->
+      <p id="total-{{ product.id }}" class="text-md font-medium text-blue-600 mt-1">
+        Total: ₦{{ product.price }}
+      </p>
+
+      <!-- Action Buttons -->
+      <button
+        onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.discount }}')"
+        class="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold transition"
+      >
+        Buy Now
+      </button>
+      <button
+        onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.discount }}')"
+        class="mt-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold transition"
+      >
+        Add to Cart
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    const quantities = {};
+
+    function changeQty(id, delta) {
+      const qtySpan = document.getElementById("qty-" + id);
+      let currentQty = parseInt(qtySpan.innerText);
+      let newQty = Math.max(1, currentQty + delta);
+      qtySpan.innerText = newQty;
+      quantities[id] = newQty;
+
+      const discount = parseFloat(document.getElementById("discount-" + id).innerText);
+      const total = newQty * discount;
+      document.getElementById("total-" + id).innerText = `Total: ₦${total}`;
+    }
+
+    function addToCart(id, name, price, discount) {
+      const qty = quantities[id] || 1;
+      console.log(`Adding to cart: ${name}, Qty: ${qty}, Price: ${price}`);
+      // Add your fetch or cart logic here
+    }
+  </script>
 </body>
-<script>
-    setInterval(location.reload(),9000)
-</script>
 </html>

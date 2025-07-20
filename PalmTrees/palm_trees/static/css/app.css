@@ -91,6 +91,11 @@
         text-decoration: none;
         border-radius: 10px;
       }
+      .btn:hover{
+        background-color: whitesmoke;
+        color: #2c3e50;
+        transition: 0.5s;
+      }
 
       section {
         padding: 60px 20px;

@@ -13,6 +13,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=0,default=0)
     image = models.ImageField(upload_to='products/')
     available = models.BooleanField(default=True)
 
