@@ -1,14 +1,19 @@
 from collections import defaultdict
 
-ip_counts = defaultdict(int)
+# Dictionary to count failed login attempts
+user_attempts = defaultdict(int)
 
-with open("auth.log","r") as file:
+# Open the log file
+with open("/var/log/auth.log", "r") as file:
     for line in file:
-        if "Failed password" in line:
-            parts = line.split()
-            ip = parts[-4]
-            ip_counts[ip] += 1
+        if "password check failed for user" in line:
+            # Extract the username from the line
+            start = line.find("(") + 1
+            end = line.find(")")
+            username = line[start:end]
+            user_attempts[username] += 1
 
-for ip, count in ip_counts.items():
+# Show users with 3 or more failed attempts
+for user, count in user_attempts.items():
     if count >= 3:
-        print(f"[!] Possible brute-force attack from {ip} ({count} attempts)")
+        print(f"[!] ALERT: User '{user}' had {count} failed login attempts.")
