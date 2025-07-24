@@ -66,11 +66,11 @@
           return;
         }
 
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-
+        const total = 100
         const handler = PaystackPop.setup({
-          key: 'pk_test_c5fa37d34f786d6de95a3939bf8fb1245343e9f7',
+          key: 'pk_live_229367664569b1781b6f9e351d118caf83472c26',
           email: 'muhammadaliyumuazu@email.com',
+          name: "Amir",
           amount: total * 100,
           currency: 'NGN',
           ref: '' + Math.floor(Math.random() * 1000000000 + 1),

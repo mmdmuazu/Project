@@ -77,12 +77,15 @@
       const total = newQty * discount;
       document.getElementById("total-" + id).innerText = `Total: ₦${total}`;
     }
+function addToCart(id, name, price, discount) {
+  const finalPrice = price - (price * discount) / 100;
+  const item = { id, name, price: finalPrice };
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (!cart.find((p) => p.id === id)) cart.push(item);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert(`${name} added to cart!`);
+}
 
-    function addToCart(id, name, price, discount) {
-      const qty = quantities[id] || 1;
-      console.log(`Adding to cart: ${name}, Qty: ${qty}, Price: ${price}`);
-      // Add your fetch or cart logic here
-    }
   </script>
 </body>
 </html>

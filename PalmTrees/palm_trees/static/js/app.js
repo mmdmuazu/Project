@@ -35,11 +35,3 @@ function closeNav() {
 }
 
 
-function addToCart(id, name, price, discount) {
-  const finalPrice = price - (price * discount) / 100;
-  const item = { id, name, price: finalPrice };
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  if (!cart.find((p) => p.id === id)) cart.push(item);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert(`${name} added to cart!`);
-}
