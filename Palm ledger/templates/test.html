@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Palm Ledger App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+     form input, form button {
+      flex: 1 1 200px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    } 
+
+    form button {
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background: #1e4eb2;
+    }
+
+    .search-form {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .search-input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      flex: 1 1 200px;
+    }
+
+    .search-btn {
+      padding: 10px 20px;
+      background-color: #228b22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background-color: #196619;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .paid{
+        /* float: inline-start; */
+        /* display: flex; */
+        margin-left: -29%;
+        margin-top: -12%;
+        /* width: 20px; */
+      }
+      label{
+        /* display: flex; */
+        /* margin: 25%; */
+        margin-bottom: -2%;
+        /* margin: -10%; */
+        /* margin-right: -0%; */
+      }
+      form input, form button {
+        flex: 1 1 100%;
+      }
+    }
+    .paid{
+    border-radius: 50%;
+    display: flex;
+    /* width: 20px; */
+    /* height: 20px; */
+    margin-left: -17%;
+    cursor: pointer;
+    }
+    label{
+      margin-top: 3px;padding: 5px; font-size: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Palm Ledger App</h1>
+
+    <!-- Search Form -->
+    <form method="GET" action="/" class="search-form">
+      <input type="text" name="search" placeholder="Search by name or product" class="search-input" />
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <!-- Entry Form -->
+    <form action="/" method="POST">
+      <input type="text" name="customer_name" placeholder="Customer Name" required>
+      <input type="text" name="product_name" placeholder="Product Name" required>
+      <input type="number" name="quantity" placeholder="Quantity" required>
+      <input type="number" name="price" placeholder="Price (per unit)" step="0.01" required>
+      <!-- <div style="margin-top: 5px; font-size: 20px;"> -->
+        <label>Paid</label>
+      <!-- </div> -->
+      <input class="paid" type="checkbox" name="paid" >
+      <button type="submit">Add Transaction</button>
+    </form>
+
+    <!-- Ledger Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in ledger %}
+          <tr>
+            <td>{{ t.customer_name }}</td>
+            <td>{{ t.product_name }}</td>
+            <td>{{ t.quantity }}</td>
+            <td>₦{{ '%.2f'|format(t.price) }}</td>
+            <td>₦{{ '%.2f'|format(t.total) }}</td>
+            <td style="text-align: center;"> 
+              <div class="paid-dot" style="background-color: {{ t.color }}; border-radius: 50%; width: 20px; height: 20px; margin-left: 15px; cursor: pointer;"></div>
+            </td>
+            <td>{{ t.date }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6">No transactions found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+<script>
+  const paidDots = document.querySelectorAll(".paid-dot");
+
+  paidDots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      dot.style.backgroundColor = "green";
+    });
+  });
+</script>
+
+</body>
+</html>

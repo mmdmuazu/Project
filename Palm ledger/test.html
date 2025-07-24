@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Search</title>
+</head>
+<body>
+  <input type="text" name="text" id="text" placeholder="Search...">
+  <div id="message"></div>
+
+  <script>
+    const message = document.getElementById("message");
+    const text = document.getElementById("text");
+    const list = ["amir", "sani", "gali"];
+
+    text.addEventListener("input", () => {
+      const inputValue = text.value.toLowerCase();
+      const match = list.find(name => name.toLowerCase().includes(inputValue));
+
+      if (inputValue === "") {
+        message.textContent = "";
+      } else if (match) {
+        message.textContent = `Found: ${match}`;
+      } else {
+        message.textContent = "No match found";
+      }
+    });
+  </script>
+</body>
+</html>
