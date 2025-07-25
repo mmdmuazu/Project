@@ -151,7 +151,7 @@
       <input type="text" name="customer_name" placeholder="Customer Name" required>
       <input type="text" name="product_name" placeholder="Product Name" required>
       <input type="number" name="quantity" placeholder="Quantity" required>
-      <input type="number" name="price" placeholder="Price (per unit)" step="0.01" required>
+      <input type="text" id="price" name="price" placeholder="Price (per unit)" required oninput="formatPrice(this)">
       <label>Paid</label>
       <input class="paid" type="checkbox" name="paid" required>
       <input type="date" name="date" required>
@@ -179,7 +179,7 @@
             <td>{{ t.product_name }}</td>
             <td>{{ t.quantity }}</td>
             <td>₦{{ '%.2f'|format(t.price) }}</td>
-            <td>₦{{ '%.2f'|format(t.total) }}</td>
+            <td>₦{{ "{:,.2f}".format(t.total) }}</td>
             <td style="text-align: center;"> 
               <div class="paid-dot" style="background-color: {{ t.color }}; border-radius: 50%; width: 20px; height: 20px; margin-left: 15px; cursor: pointer;"></div>
             </td>
@@ -203,6 +203,15 @@
       dot.style.backgroundColor = "green";
     });
   });
+
+  function formatPrice(input) {
+  let raw = input.value.replace(/,/g, '');  // remove commas
+  if (!isNaN(raw) && raw !== "") {
+    input.value = Number(raw).toLocaleString('en-NG');
+  }
+}
+// let price = document.getElementById('price');
+// formatPrice(price);
 </script>
 
 </body>

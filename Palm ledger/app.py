@@ -31,7 +31,7 @@ def index():
         name = request.form['customer_name']
         product = request.form['product_name']
         quantity = int(request.form['quantity'])
-        price = float(request.form['price'])
+        price = float(request.form['price'].replace(',', ''))
         paid = request.form.get('paid')
         is_paid = paid == "on"
         print(paid)
