@@ -36,7 +36,7 @@ def index():
         is_paid = paid == "on"
         print(paid)
         total = quantity * price
-        timestamp = datetime.now().strftime('%b %d, %Y %I:%M %p')
+        timestamp = request.form.get("date") #datetime.now().strftime('%b %d, %Y %I:%M %p')
 
         ledger.append({
             "customer_name": name,
